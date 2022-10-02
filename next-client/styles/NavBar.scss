@@ -1,0 +1,25 @@
+.Navbar div {
+    // display: flex;
+    justify-content: space-around;
+    max-width: 100%;
+}
+
+.Navbar div div {
+    // display: flex;
+    align-items: space-around;
+    justify-content: space-around;
+    max-width: 100%;
+}
+
+.NavLink {
+    // display: inline-block;
+    vertical-align: middle;
+}
+
+.NavLink span {
+    vertical-align: middle;
+}
+
+button.NavLink {
+    text-transform: none;
+}
