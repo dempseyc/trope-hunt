@@ -2,6 +2,7 @@ import {Action, Thunk} from 'easy-peasy'
 import {action, thunk} from 'easy-peasy'
 import axios from 'axios'
 
+
 const API2_URL = '/api/movies/'
 
 interface QueryShape {
@@ -12,7 +13,6 @@ interface QueryShape {
 export interface MoviesModel {
     error: boolean;
     query: QueryShape;
-    //tbd
     selection: number | null;
     loading: boolean;
     complete: boolean;
@@ -52,7 +52,10 @@ export const movies: MoviesModel = {
       state.complete = false;
       state.error = false;
     }),
-    setSelection: action((state,payload) => { state.selection = payload}), // also has index
+    setSelection: action((state,payload) => { state.selection = payload}),
+    // selectMovie: thunk(async (actions,payload) => {
+    //   actions.setSelection(payload.id)
+    // }),
     submitQuery: thunk(async (actions,payload) => {
       const {text,page} = payload;
       if (text.length) {

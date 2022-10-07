@@ -5,7 +5,7 @@ const Header = () => {
     return (
         <div className='Header'>
             <Link href="/"><a>
-                <h1>Next.js-CLIENT HEADER</h1>
+                <h1>Trope-Hunt</h1>
             </a></Link>
         </div>
     )
