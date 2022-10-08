@@ -2,6 +2,7 @@ import { Action, Thunk } from "easy-peasy";
 import { action, thunk } from "easy-peasy";
 import axios from "axios";
 
+const API_URL = "/api/gameMovies/";
 const API2_URL = "/api/movies/";
 
 interface QueryShape {
@@ -33,11 +34,16 @@ export interface MoviesModel {
   data: [...MovieData[]] | null;
   setError: Action<MoviesModel, MoviesModel["error"]>;
   setLoading: Action<MoviesModel, MoviesModel["loading"]>;
-  setData: Action<MoviesModel, any>;
+  setData: Action<MoviesModel, [...MovieData[]]>;
+  setTotalPages: Action<MoviesModel, MoviesModel["total_pages"]>;
   setQuery: Action<MoviesModel, QueryShape>;
   setSelection: Action<MoviesModel, MoviesModel["selection"]>;
   submitQuery: Thunk<MoviesModel, QueryShape>;
   resetQuery: Action<MoviesModel, any>;
+  chooseGameMovie: Thunk<MoviesModel, MovieData>;
+  setCurrentGameMovie: Action<MoviesModel, MovieData>;
+  currentGameMovie: MovieData;
+  fetchGameMovies: Thunk<MoviesModel>;
 }
 
 export const movies: MoviesModel = {
@@ -56,9 +62,13 @@ export const movies: MoviesModel = {
     state.loading = payload;
   }),
   setData: action((state, payload) => {
-    state.data = state.data ? [...state.data, ...payload.results] : [...payload.results];
-    state.total_pages = payload.total_pages;
-    state.complete = ( state.query.page >= payload.total_pages );
+    state.data = state.data
+      ? [...state.data, ...payload]
+      : [...payload];
+    }),
+  setTotalPages: action((state,payload) => {
+    state.total_pages = payload;
+    state.complete = state.query.page >= payload;
   }),
   setQuery: action((state, payload) => {
     state.query = payload;
@@ -90,7 +100,8 @@ export const movies: MoviesModel = {
           return allExcept;
         });
         const total_pages = response.data.total_pages;
-        actions.setData({results, total_pages});
+        actions.setTotalPages(total_pages);
+        actions.setData(results);
       } catch (error) {
         console.log(error);
         actions.setError(true);
@@ -99,4 +110,43 @@ export const movies: MoviesModel = {
       }
     }
   }),
+  setCurrentGameMovie: action((state, payload) => {
+    state.currentGameMovie = payload;
+  }),
+  chooseGameMovie: thunk(async (actions, payload) => {
+    const url = `${API_URL}/create`;
+    const token = localStorage.token;
+    try {
+      const response = await axios.post(url, 
+        {
+          gameMovie: payload,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        }
+      );
+      actions.setCurrentGameMovie(response.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      console.log("game created");
+    }
+  }),
+  fetchGameMovies: thunk(async (actions) => {
+    const url = `${API_URL}`;
+    try {
+      actions.setLoading(true);
+      const response = await axios.get(url);
+      const results: MovieData[] = response.data;
+      actions.setData(results);
+    } catch (error) {
+      actions.setError(true);
+    } finally {
+      actions.setLoading(false);
+    }
+  })
 };

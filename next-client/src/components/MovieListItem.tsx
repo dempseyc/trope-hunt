@@ -6,7 +6,7 @@ import MuiAccordionSummary, {
   AccordionSummaryProps,
 } from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -46,11 +46,11 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 const MovieListItem = (props) => {
-  const { idx, data, selection, handleClick } = props;
+  const { idx, data, selection, handleClick, actions } = props;
   const [expanded, setExpanded] = React.useState<number | false>(false);
-	const date = data.release_date && `(${data.release_date.slice(0,4)})`;
-  const overview = data.overview && data.overview;
-	const text = `${data.original_title} ${date}`;
+  const date = data.release_date && `(${data.release_date.slice(0, 4)})`;
+  const overview = data.overview;
+  const text = `${data.original_title} ${date}`;
 
   const handleChange =
     (panel: number) => (event: React.SyntheticEvent, newExpanded: boolean) => {
@@ -58,13 +58,24 @@ const MovieListItem = (props) => {
       handleClick(idx);
     };
 
+  const details = (
+    <>
+      <div className="movie-image"></div>
+      <div className="movie-description">{overview}</div>
+      <Button
+        variant="outlined"
+        onClick={() => { actions.chooseMovie(idx) }}
+        >Choose Movie</Button>
+    </>
+  )
+
   return (
     <div className="movie-list-item">
       <Accordion expanded={selection === idx} onChange={handleChange(idx)}>
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
           {text}
         </AccordionSummary>
-        <AccordionDetails>{overview}</AccordionDetails>
+        <AccordionDetails>{details}</AccordionDetails>
       </Accordion>
     </div>
   );

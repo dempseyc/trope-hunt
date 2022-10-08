@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Loading from './Loading'
 
 const ItemList = (props) => {
-    const {query, submitQuery, contentName, data, loading, complete, ListItem } = props;
+    const {query, submitQuery, contentName, data, loading, complete, ListItem, actions } = props;
     const[selection, setSelection] = useState(null);
 
     const isBottom = (el) => {
@@ -38,6 +38,7 @@ const ItemList = (props) => {
                     data={item}
                     selection={selection}
                     handleClick={() => handleClick(i, selection)}
+                    actions={actions}
                 />
             )
         });

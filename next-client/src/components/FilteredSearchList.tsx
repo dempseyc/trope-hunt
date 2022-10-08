@@ -5,7 +5,7 @@ import ItemList from './ItemList'
 import MovieListItem from './MovieListItem'
 
 const FilteredSearchList = (props) => {
-    const {contentName, query, submitQuery, resetQuery, data, loading, complete, filterFunction} = props;
+    const {contentName, query, submitQuery, resetQuery, data, loading, complete, filterFunction, actions} = props;
     const [filter, setFilter] = useState('');
 
     const filteredData = data ?? data?.filter((item) => filterFunction(item, filter));
@@ -22,6 +22,7 @@ const FilteredSearchList = (props) => {
                 loading={loading}
                 complete={complete}
                 ListItem={MovieListItem}
+                actions={actions}
             />
         </>
     )
