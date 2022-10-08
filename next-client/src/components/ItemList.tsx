@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Loading from './Loading'
 
 const ItemList = (props) => {
-    const {query, submitQuery, contentName, data, loading, complete, pages, ListItem } = props;
+    const {query, submitQuery, contentName, data, loading, complete, ListItem } = props;
     const[selection, setSelection] = useState(null);
 
     const isBottom = (el) => {
@@ -43,7 +43,7 @@ const ItemList = (props) => {
         });
     }
 
-    const list = (data.length>0) ? listItems(data) : null ;
+    const list = data && listItems(data);
 
     return (
         <div id='item-list' className='item-list' onScroll={handleScroll}>

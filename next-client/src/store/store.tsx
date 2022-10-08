@@ -20,7 +20,7 @@ export const useStoreDispatch = typedHooks.useStoreDispatch;
 export const useStoreState = typedHooks.useStoreState;
 
 export const model: StoreModel = {
-  currView: 2,
+  currView: 0,
   setCurrView: action((state, payload) => { state.currView = payload }),
   movies,
   users,
