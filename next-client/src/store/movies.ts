@@ -30,7 +30,7 @@ export interface MoviesModel {
   loading: boolean;
   complete: boolean;
   total_pages: number;
-  data: [...any] | null;
+  data: [...MovieData[]] | null;
   setError: Action<MoviesModel, MoviesModel["error"]>;
   setLoading: Action<MoviesModel, MoviesModel["loading"]>;
   setData: Action<MoviesModel, any>;
@@ -84,14 +84,13 @@ export const movies: MoviesModel = {
       try {
         const response = await axios.get(url);
         // console.log(response.data);
-        const results = response.data.results?.map((movie) => {
+        const results: MovieData[] = response.data.results?.map((movie) => {
           movie.tmdb_id = movie.id;
           const { id, ...allExcept } = movie;
           return allExcept;
         });
         const total_pages = response.data.total_pages;
         actions.setData({results, total_pages});
-        // actions.setData(response.data);
       } catch (error) {
         console.log(error);
         actions.setError(true);
