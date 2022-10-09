@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import SearchForm from './SearchForm'
 import ItemList from './ItemList'
@@ -8,7 +8,8 @@ const FilteredSearchList = (props) => {
     const {contentName, query, submitQuery, resetQuery, data, loading, complete, filterFunction, actions} = props;
     const [filter, setFilter] = useState('');
 
-    const filteredData = data ?? data?.filter((item) => filterFunction(item, filter));
+    const filteredData = data?.filter((item) => filterFunction(item, filter));
+    console.log(filteredData?.length, filter, data);
     
     return (
         <>

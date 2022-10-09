@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useStoreState, useStoreActions } from "../store/store";
 import FilteredSearchList from "./FilteredSearchList";
 
@@ -9,6 +10,14 @@ const ViewMain = (props) => {
   const data = useStoreState((state) => state.movies.data);
   const loading = useStoreState((state) => state.movies.loading);
   const complete = useStoreState((state) => state.movies.complete);
+
+  const fetchGameMovies = useStoreActions((actions) => actions.movies.fetchGameMovies);
+
+  useEffect(() => {
+    console.log("ue in viewmain");
+    const fetch = async () => { await fetchGameMovies() };
+    fetch();
+  }, [fetchGameMovies]);
 
   const filterFunction = (data, filter) => {
     const filterWords = filter.toLowerCase().split(" ");

@@ -42,7 +42,7 @@ export interface MoviesModel {
   resetQuery: Action<MoviesModel, any>;
   chooseGameMovie: Thunk<MoviesModel, MovieData>;
   setCurrentGameMovie: Action<MoviesModel, MovieData>;
-  currentGameMovie: MovieData;
+  currentGameMovie: MovieData | null;
   fetchGameMovies: Thunk<MoviesModel>;
 }
 
@@ -54,6 +54,7 @@ export const movies: MoviesModel = {
   complete: false,
   total_pages: 0,
   data: null,
+  currentGameMovie: null,
 
   setError: action((state, payload) => {
     state.error = payload;
@@ -76,7 +77,6 @@ export const movies: MoviesModel = {
   resetQuery: action((state, payload) => {
     state.query = { text: "", page: -1 };
     state.total_pages = 0;
-    state.data = null;
     state.loading = false;
     state.complete = false;
     state.error = false;
@@ -93,7 +93,6 @@ export const movies: MoviesModel = {
       actions.setLoading(true);
       try {
         const response = await axios.get(url);
-        // console.log(response.data);
         const results: MovieData[] = response.data.results?.map((movie) => {
           movie.tmdb_id = movie.id;
           const { id, ...allExcept } = movie;

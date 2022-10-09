@@ -40,7 +40,10 @@ export const wrapper = createWrapper<Store<StoreModel>>(makeStore, {debug: true}
 //     state.count = target.payload.count;
 //   }
 // )
-
+// const combinedReducer = combineReducers({
+//   count,
+//   tick,
+// })
 // const reducer = (state, action) => {
 //   if (action.type === HYDRATE) {
 //     const nextState = {
