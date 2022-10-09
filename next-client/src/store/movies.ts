@@ -11,6 +11,7 @@ interface QueryShape {
 }
 
 interface MovieData {
+  _id?: string; 
   tmdb_id?: number;
   created_by?: number;
   backdrop_path?: string;

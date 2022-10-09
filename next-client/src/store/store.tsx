@@ -5,12 +5,16 @@ import { HYDRATE, createWrapper, Context } from "next-redux-wrapper";
 import {Action} from 'easy-peasy'
 import {users, UsersModel} from './users'
 import {movies, MoviesModel} from './movies'
+import {game, GameModel} from './game'
 
 export interface StoreModel {
+  gameOn: boolean;
+  setGameOn: Action<StoreModel, StoreModel['gameOn']>;
   currView: number;
   setCurrView: Action<StoreModel, StoreModel['currView']>;
   movies: MoviesModel;
   users: UsersModel;
+  game: GameModel;
 }
 
 const typedHooks = createTypedHooks<StoreModel>();
@@ -20,10 +24,13 @@ export const useStoreDispatch = typedHooks.useStoreDispatch;
 export const useStoreState = typedHooks.useStoreState;
 
 export const model: StoreModel = {
+  gameOn: false,
+  setGameOn: action((state, payload) => { state.gameOn = payload }),
   currView: 0,
   setCurrView: action((state, payload) => { state.currView = payload }),
   movies,
   users,
+  game
 }
 
 const makeStore = (context: Context) => {

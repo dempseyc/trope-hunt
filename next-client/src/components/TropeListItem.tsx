@@ -45,12 +45,10 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: "1px solid rgba(0, 0, 0, .125)",
 }));
 
-const MovieListItem = (props) => {
+const TropeListItem = (props) => {
   const { idx, data, selection, handleClick, actions } = props;
   const [expanded, setExpanded] = React.useState<number | false>(false);
-  const date = data.release_date && `(${data.release_date.slice(0, 4)})`;
-  const overview = data.overview;
-  const text = `${data.original_title} ${date}`;
+  const {description, bonus} = data;
 
   const handleChange =
     (panel: number) => (event: React.SyntheticEvent, newExpanded: boolean) => {
@@ -60,15 +58,14 @@ const MovieListItem = (props) => {
 
   const details = (
     <>
-      <div className="movie-image"></div>
-      <div className="movie-description">{overview}</div>
+      <div className="bonus-buttons">{`${bonus.join(" ")}`}</div>
       <Button
         variant="outlined"
-        onClick={() => { 
-          actions.chooseMovie(idx);
-          actions.setGameOn(true);
-        }}
-        >Choose Movie</Button>
+        onClick={() => { actions.claimTrope(idx,bonus) }}
+      >
+        Claim Trope
+      </Button>
+      <div className="not-now-button">Not Now</div>
     </>
   )
 
@@ -76,7 +73,7 @@ const MovieListItem = (props) => {
     <div className="movie-list-item">
       <Accordion expanded={selection === idx} onChange={handleChange(idx)}>
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-          {text}
+          {description}
         </AccordionSummary>
         <AccordionDetails>{details}</AccordionDetails>
       </Accordion>
@@ -84,4 +81,4 @@ const MovieListItem = (props) => {
   );
 };
 
-export default MovieListItem;
+export default TropeListItem;

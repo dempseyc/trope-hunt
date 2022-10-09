@@ -6,6 +6,7 @@ const ViewMain = (props) => {
   const submitQuery = useStoreActions((actions) => actions.movies.submitQuery);
   const resetQuery = useStoreActions((actions) => actions.movies.resetQuery);
   const chooseMovie = useStoreActions((actions) => actions.movies.chooseGameMovie);
+  const setGameOn = useStoreActions(actions => actions.setGameOn);
   const query = useStoreState((state) => state.movies.query);
   const data = useStoreState((state) => state.movies.data);
   const loading = useStoreState((state) => state.movies.loading);
@@ -26,7 +27,8 @@ const ViewMain = (props) => {
   };
 
   const actions = {
-    chooseMovie: (idx) => { chooseMovie(data[idx]) }
+    chooseMovie: (idx) => { chooseMovie(data[idx]) },
+    setGameOn: (boo) => { setGameOn(boo) }
   }
 
   return (

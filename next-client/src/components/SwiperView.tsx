@@ -3,19 +3,20 @@ import ViewMain from './ViewMain'
 import ViewUser from './ViewUser'
 import ViewGeneric from './ViewGeneric'
 import ViewMore from './ViewMore'
-import Container from "@mui/material/Container";
+import ViewGame from './ViewGame'
 
 const SwiperView = (props) => {
 
     const {viewName, index} = props
     const currView = useStoreState(state => state.currView);
+    const gameOn = useStoreState(state => state.gameOn);
 
     let view;
 
     // replace switch with key/val pairs
     switch (viewName) {
         case 'main':
-            view = <ViewMain {...props}/>;
+            view = gameOn ? <ViewGame {...props}/> : <ViewMain {...props}/>;
             break;
         case 'user':
             view = <ViewUser {...props}/>;

@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import Loading from './Loading'
 
-const ItemList = (props) => {
+const QueriedItemList = (props) => {
     const {query, submitQuery, contentName, data, loading, complete, ListItem, actions } = props;
     const[selection, setSelection] = useState(null);
 
@@ -55,4 +55,4 @@ const ItemList = (props) => {
 
 }
 
-export default ItemList;
+export default QueriedItemList;
