@@ -1,30 +1,40 @@
-import { useState, useEffect } from 'react'
+import { useState, createContext } from 'react'
 
 import SearchForm from './SearchForm'
-import ItemList from './QueriedItemList'
-import MovieListItem from './MovieListItem'
+import QueriedItemList from './QueriedItemList'
+
+export const FSLContext = createContext({
+    contentName: "",
+    query: null,
+    submitQuery: null,
+    resetQuery:  null,
+    data: null,
+    loading: null,
+    complete: null,
+    filterFunction: null,
+    actions: null,
+    filter: "",
+    setFilter: null,
+    ListItem: null,
+});
 
 const FilteredSearchList = (props) => {
-    const {contentName, query, submitQuery, resetQuery, data, loading, complete, filterFunction, actions} = props;
     const [filter, setFilter] = useState('');
-
-    const filteredData = data?.filter((item) => filterFunction(item, filter));
+    
+    const filteredData = props.data?.filter((item) => props.filterFunction(item, filter));
+    
         
     return (
-        <>
-            <SearchForm submitQuery={submitQuery}  resetQuery={resetQuery} setFilter={setFilter}/>
-            <ItemList
-                query={query}
-                submitQuery={submitQuery}
-                contentName={contentName}
-                filter={filter}
-                data={filteredData}
-                loading={loading}
-                complete={complete}
-                ListItem={MovieListItem}
-                actions={actions}
-            />
-        </>
+        <FSLContext.Provider
+            value={{
+                filter,
+                setFilter,
+                data: filteredData,
+                ...props,
+            }}>
+            <SearchForm />
+            <QueriedItemList />
+        </FSLContext.Provider>
     )
 }
 

@@ -1,14 +1,14 @@
-import {useState} from 'react';
+import {useState, useContext} from 'react';
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
-
+import { FSLContext } from './FilteredSearchList';
 import SearchIcon from '@mui/icons-material/Search';
 
-const SearchForm = (props) => {
-    const {submitQuery, resetQuery, setFilter} = props;
+const SearchForm = () => {
+    const {submitQuery, resetQuery, setFilter} = useContext(FSLContext);
 
     const [text, setText] = useState('');
     

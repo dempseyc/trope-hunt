@@ -32,7 +32,7 @@ exports.create = function(req, res) {
             if (error) {
                 return res.send(error);
             } else {
-                res.json(response);
+                return res.json(response);
             }
         });
         // catch (error)
@@ -45,19 +45,22 @@ exports.create = function(req, res) {
         let params = req.body;
         params.pw_hash = hash;
         params = (({username,email,pw_hash}) => ({username,email,pw_hash}))(params)
-        User.findOneAndUpdate({"_id": res.locals.user._id},{
-            username: params.username,
-            email: params.email,
-            pw_hash: params.pw_hash
-        },
-        {new: true},
-        (error,doc) => {
-            if (error) {
-                res.send([error]);
-            } else {
-                res.send(doc);
+        User.findOneAndUpdate(
+            {"_id": res.locals.user._id},
+            {
+                username: params.username,
+                email: params.email,
+                pw_hash: params.pw_hash
+            },
+            {new: true},
+            (error,doc) => {
+                if (error) {
+                    return res.send([error]);
+                } else {
+                    return res.send(doc);
+                }
             }
-        });
+        );
     });
  };
 
@@ -66,9 +69,9 @@ exports.create = function(req, res) {
      User.findOneAndDelete({"_id": res.locals.user._id},
      (error,doc) => {
          if (error) {
-             res.send([error]);
+             return res.send([error]);
          } else {
-             res.send(["user deleted"]);
+             return res.send(["user deleted"]);
          }
      });
  };

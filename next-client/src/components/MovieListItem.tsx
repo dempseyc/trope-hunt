@@ -47,14 +47,11 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 const MovieListItem = (props) => {
   const { idx, data, selection, handleClick, actions } = props;
-  const [expanded, setExpanded] = React.useState<number | false>(false);
   const date = data.release_date && `(${data.release_date.slice(0, 4)})`;
   const overview = data.overview;
   const text = `${data.original_title} ${date}`;
 
-  const handleChange =
-    (panel: number) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-      setExpanded(newExpanded ? panel : false);
+  const handleChange = (event: React.SyntheticEvent) => {
       handleClick(idx);
     };
 
@@ -74,7 +71,7 @@ const MovieListItem = (props) => {
 
   return (
     <div className="movie-list-item">
-      <Accordion expanded={selection === idx} onChange={handleChange(idx)}>
+      <Accordion expanded={selection === idx} onChange={handleChange}>
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
           {text}
         </AccordionSummary>

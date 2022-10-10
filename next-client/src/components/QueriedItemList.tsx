@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 
 import Loading from './Loading'
+import { FSLContext } from './FilteredSearchList';
+
 
 const QueriedItemList = (props) => {
-    const {query, submitQuery, contentName, data, loading, complete, ListItem, actions } = props;
+    const {query, submitQuery, contentName, data, loading, complete, ListItem, actions } = useContext(FSLContext);
     const[selection, setSelection] = useState(null);
 
     const isBottom = (el) => {

@@ -1,14 +1,15 @@
-const Find = require('../models/Find');
+const GameMovie = require('../models/GameMovie');
 
 exports.index = function(req,res) {
-    Find.find(
+    GameMovie.find(
         {},
         (err,docs) => {
-            const results = ['no results'];
+            let results = ['no results'];
             if (err) {
                 res.send(err);
-            } else if (docs.length>0) {            
-                res.send(results)
+            } else if (docs.length>0) { 
+                results = docs;           
+                res.send(results);
             }
         }
 	);
@@ -16,7 +17,7 @@ exports.index = function(req,res) {
 
 exports.show = function(req,res) {
     console.log('req', req.params)
-    Find.findById(
+    GameMovie.findById(
         req.params.id, 
         (err,doc) => {
             if (err) {
@@ -29,10 +30,15 @@ exports.show = function(req,res) {
 };
 
 exports.create = function(req, res) {
-    const params = req.body;
-    params.user_id = res.locals.user._id;
-    Find.create(
-        { params },
+    const params = req.body.gameMovie;
+    params.created_by = res.locals.user._id;
+    GameMovie.findOneAndUpdate(
+        { tmdb_id: params.tmdb_id },
+        { $set: params },
+        {
+            new: true,   // return new doc if one is upserted
+            upsert: true // insert the document if it does not exist
+        },
         (err,doc) => {
             if (err) {
                 res.send(err);
@@ -46,7 +52,7 @@ exports.create = function(req, res) {
  exports.update = function(req, res) {
     const params = req.body;
     
-    Find.findOneAndUpdate(
+    GameMovie.findOneAndUpdate(
         {"_id": req.params.id},
         { $set: params },
         {new: true},
@@ -62,7 +68,7 @@ exports.create = function(req, res) {
 
  exports.delete = (req, res) => {
      console.log(req.params, 'params');
-     Find.findOneAndDelete(
+     GameMovie.findOneAndDelete(
         {"_id": req.params.id},
         (err,doc) => {
             if (err) {
@@ -74,3 +80,21 @@ exports.create = function(req, res) {
         }
     );
  };
+
+ exports.search = function(req,res) {
+	const query = req.body;
+	console.log(query, 'search');
+    GameMovie.find(
+        {$text: {$search: query}}
+        )
+       .limit(10)
+       .exec((err,docs) => {
+		let results = ['no results'];
+		if (err) {
+			res.send(err);
+		} else if (docs.length>0) {            
+			results = docs
+		}
+		res.send(results)
+	});
+};

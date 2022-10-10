@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useStoreState, useStoreActions } from "../store/store";
 import FilteredSearchList from "./FilteredSearchList";
+import MovieListItem from './MovieListItem'
 
-const ViewMain = (props) => {
+const ViewMain = () => {
   const submitQuery = useStoreActions((actions) => actions.movies.submitQuery);
   const resetQuery = useStoreActions((actions) => actions.movies.resetQuery);
   const chooseMovie = useStoreActions((actions) => actions.movies.chooseGameMovie);
@@ -42,6 +43,7 @@ const ViewMain = (props) => {
       complete={complete}
       filterFunction={filterFunction}
       actions={actions}
+      ListItem={MovieListItem}
     />
   );
 };
