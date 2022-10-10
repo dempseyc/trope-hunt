@@ -61,7 +61,7 @@ const TropeListItem = (props) => {
       <div className="bonus-buttons">{`${bonus.join(" ")}`}</div>
       <Button
         variant="outlined"
-        onClick={() => { actions.claimTrope(idx,bonus) }}
+        onClick={() => { actions.claimTrope(data._id,bonus) }}
       >
         Claim Trope
       </Button>

@@ -11,7 +11,7 @@ const TropeCard = (props) => {
   const movieId = useStoreState((state) => state.movies.currentGameMovie?._id);
 
   const actions = {
-    claimTrope: (idx) => updateGame({ idx, movieId }),
+    claimTrope: (id) => updateGame({ id, movieId }),
   };
 
   useEffect(() => {
@@ -22,9 +22,11 @@ const TropeCard = (props) => {
     fetch();
   }, [fetchTropes]);
 
+  const filteredTropes = tropes?.filter(trope => trope.status === "card");
+
   return (
     <ActionableItemList
-      data={tropes}
+      data={filteredTropes}
       loading={loading}
       ListItem={TropeListItem}
       actions={actions}

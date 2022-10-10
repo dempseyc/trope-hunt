@@ -16,10 +16,11 @@ const ViewMain = () => {
   const fetchGameMovies = useStoreActions((actions) => actions.movies.fetchGameMovies);
 
   useEffect(() => {
-    console.log("ue in viewmain");
-    const fetch = async () => { await fetchGameMovies() };
-    fetch();
-  }, [fetchGameMovies]);
+    if (!data) {
+      const fetch = async () => { await fetchGameMovies() };
+      fetch();
+    }
+  }, [fetchGameMovies, data]);
 
   const filterFunction = (data, filter) => {
     const filterWords = filter.toLowerCase().split(" ");
