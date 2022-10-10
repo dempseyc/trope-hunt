@@ -7,6 +7,8 @@ const API_URL = "/api";
 interface UpdateShape {
   id: string;
   movieId: string | undefined;
+  bonus: string[] | [];
+  points: number;
 }
 
 interface TropeData {
@@ -15,7 +17,8 @@ interface TropeData {
   bonus:  string[] | [];
   ubiquity: number;
   bonus_pts:	number;
-  status: "pool" | "card" | "found" ; 
+  status: "pool" | "card" | "found" ;
+  dateAdded: number;
 }
 
 interface StatusShape {
@@ -35,7 +38,9 @@ export interface GameModel {
   newTrope: Action<GameModel>;
   fetchTropes: Thunk<GameModel>;
   updateGame: Thunk<GameModel, UpdateShape>;
+  addPoints: Action<GameModel, number>;
   tropeQty: number;
+  score: number;
 }
 
 export const game: GameModel = {
@@ -44,6 +49,7 @@ export const game: GameModel = {
   complete: false,
   tropes: null,
   tropeQty: 12,
+  score: 0,
 
   setError: action((state, payload) => {
     state.error = payload;
@@ -61,6 +67,7 @@ export const game: GameModel = {
       const i = Math.floor(Math.random()*payload.length);
       if (payload[i]?.status !== "card") {
         payload[i].status = "card";
+        payload[i].dateAdded = new Date().getTime();
         count +=1;
       }
     }
@@ -78,6 +85,7 @@ export const game: GameModel = {
       const i = Math.floor(Math.random()*state.tropes.length);
       if (state.tropes[i]?.status !== "card") {
         state.tropes[i].status = "card";
+        state.tropes[i].dateAdded = new Date().getTime();
         count +=1;
       }
     }
@@ -96,13 +104,17 @@ export const game: GameModel = {
       actions.setLoading(false);
     }
   }),
+  addPoints: action((state, payload) => { state.score += payload }),
   updateGame: thunk(async (actions, payload) => {
-    const {id, movieId} = payload;
+    const {id, movieId, bonus, points} = payload;
     actions.setStatus({id, status: "found"});
+    actions.addPoints(points);
     actions.newTrope();
     const url = `${API_URL}/find/create`;
     try {
       console.log("udG", id, movieId);
+      //create find
+      //store gameData on user afterwards
       return payload;
     } catch (error) {
       actions.setError(true);

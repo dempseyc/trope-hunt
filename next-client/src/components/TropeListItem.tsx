@@ -7,6 +7,12 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Button from "@mui/material/Button";
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+
+const CheckIcon = ({value}) => {
+  return value ? <CheckBoxIcon/> : <CheckBoxOutlineBlankIcon/>;
+}
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -47,31 +53,59 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 const TropeListItem = (props) => {
   const { idx, data, selection, handleClick, actions } = props;
-  const [expanded, setExpanded] = React.useState<number | false>(false);
-  const {description, bonus} = data;
+  const { description, bonus } = data;
+  const bonusRequired = data.bonus_pts === 0;
+  const [bonusCheck, setBonusCheck] = React.useState(
+    Array.from(
+      {
+        length: data.bonus.length,
+      },
+      (item, i) => {
+        if (bonusRequired && i === 0) {
+          return true;
+        } else { return false; }
+      }
+    )
+  );
+  
+  const handleChange = (event: React.SyntheticEvent) => {
+    handleClick(idx);
+  };
+  
+  const handleClaim = () => {
+    const points = data.points + bonusCheck.length * data.bonus_pts;
+    actions.claimTrope(data._id, bonus.filter((b, i) => bonusCheck[i]), points);
+  };
 
-  const handleChange =
-    (panel: number) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-      setExpanded(newExpanded ? panel : false);
-      handleClick(idx);
-    };
+  const handleBonus = (b, i) => {
+    let newBonusCheck = [...bonusCheck];
+    if (bonusRequired) { newBonusCheck = newBonusCheck.map(b => false) };
+    newBonusCheck[i] = !newBonusCheck[i];
+    setBonusCheck(newBonusCheck);
+  };
+
+  const bonusButtons = bonus.map((b, i) => {
+    return (
+      <Button key={`bb-${i}`} onClick={() => handleBonus(b, i)}>
+        <CheckIcon value={bonusCheck[i]} />
+        {b}
+      </Button>
+    );
+  });
 
   const details = (
     <>
-      <div className="bonus-buttons">{`${bonus.join(" ")}`}</div>
-      <Button
-        variant="outlined"
-        onClick={() => { actions.claimTrope(data._id,bonus) }}
-      >
+      <div className="bonus-buttons">{bonusButtons}</div>
+      <Button variant="outlined" onClick={handleClaim}>
         Claim Trope
       </Button>
       <div className="not-now-button">Not Now</div>
     </>
-  )
+  );
 
   return (
     <div className="movie-list-item">
-      <Accordion expanded={selection === idx} onChange={handleChange(idx)}>
+      <Accordion expanded={selection === idx} onChange={handleChange}>
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
           {description}
         </AccordionSummary>

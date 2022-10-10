@@ -11,7 +11,7 @@ const TropeCard = (props) => {
   const movieId = useStoreState((state) => state.movies.currentGameMovie?._id);
 
   const actions = {
-    claimTrope: (id) => updateGame({ id, movieId }),
+    claimTrope: (id, bonus, points) => updateGame({ movieId, id, bonus, points }),
   };
 
   useEffect(() => {
