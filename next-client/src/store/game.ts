@@ -106,16 +106,26 @@ export const game: GameModel = {
   }),
   addPoints: action((state, payload) => { state.score += payload }),
   updateGame: thunk(async (actions, payload) => {
+    const token = localStorage.token;
     const {id, movieId, bonus, points} = payload;
     actions.setStatus({id, status: "found"});
     actions.addPoints(points);
     actions.newTrope();
-    const url = `${API_URL}/find/create`;
+    const url = `${API_URL}/finds/create`;
     try {
-      console.log("udG", id, movieId);
-      //create find
-      //store gameData on user afterwards
-      return payload;
+      actions.setLoading(true);
+      const response = await axios.post(url,{
+        movie_id: movieId,
+        trope_id: id,
+        bonus_memos: bonus
+      },{
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      console.log(response);
     } catch (error) {
       actions.setError(true);
     } finally {
