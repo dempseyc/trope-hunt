@@ -77,7 +77,7 @@ const TropeListItem = (props) => {
     actions.claimTrope(data._id, bonus.filter((b, i) => bonusCheck[i]), points);
   };
 
-  const handleBonus = (b, i) => {
+  const handleBonus = (_, i) => {
     let newBonusCheck = [...bonusCheck];
     if (bonusRequired) { newBonusCheck = newBonusCheck.map(b => false) };
     newBonusCheck[i] = !newBonusCheck[i];
@@ -99,7 +99,7 @@ const TropeListItem = (props) => {
       <Button variant="outlined" onClick={handleClaim}>
         Claim Trope
       </Button>
-      <div className="not-now-button">Not Now</div>
+      <Button className="not-now-button" variant="outlined" onClick={()=>{handleClick(null)}}>Not Now</Button>
     </>
   );
 

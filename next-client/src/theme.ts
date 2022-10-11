@@ -34,12 +34,13 @@ const theme = createTheme({
       MuiButton: {
         styleOverrides: {
           root: {
+            fontSize: 'inherit',
             margin: '0.1rem',
             ':focus': { //same as :hover
               webkitTextDecoration: 'none',
               textDecoration: 'none',
               backgroundColor: 'rgba(158, 158, 158, 0.04)',
-              border: '1px solid #9e9e9e'
+              border: '1px solid #9e9e9e',
             },
             raisedPrimary: {
               color: blueGrey[800],

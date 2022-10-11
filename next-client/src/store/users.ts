@@ -44,8 +44,10 @@ export const users: UsersModel = {
     setError: action((state,payload) => {state.error = payload}),
   
     fetchUser: thunk(async (actions) => {
-      const token = localStorage.token;
-      const id = localStorage.id;
+      const { token, id } = localStorage;
+      if (!token) {
+        return;
+      }
       const url = `${API_URL}api/users/${id}`;
       actions.setLoading(true);
       try {
