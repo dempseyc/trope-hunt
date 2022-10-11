@@ -21,6 +21,8 @@ const authRouter = require('./routes/authRouter');
 
 const tropesRouter = require('./routes/tropesRouter');
 const gameMoviesRouter = require('./routes/gameMoviesRouter');
+const findsRouter = require('./routes/findsRouter');
+
 
 const User = require('./models/User');
 // const FacebookTokenStrategy = require('passport-facebook-token');
@@ -134,6 +136,8 @@ app.use('/api/tropes', tropesRouter);
 app.use('/api/gameMovies', exclude('/',tokenCheck));
 app.use('/api/gameMovies', gameMoviesRouter);
 
+app.use('/api/finds', tokenCheck);
+app.use('/api/finds', findsRouter);
 
 function tokenCheck (req,res,next) {
     console.log('inside tokencheck');
