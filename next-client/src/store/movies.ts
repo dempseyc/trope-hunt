@@ -10,7 +10,7 @@ interface QueryShape {
   page: number;
 }
 
-interface MovieData {
+export interface MovieData {
   _id?: string; 
   tmdb_id?: number;
   created_by?: number;
@@ -42,6 +42,7 @@ export interface MoviesModel {
   submitQuery: Thunk<MoviesModel, QueryShape>;
   resetQuery: Action<MoviesModel, any>;
   chooseGameMovie: Thunk<MoviesModel, MovieData>;
+  loadGameMovie: Action<MoviesModel, MovieData>;
   setCurrentGameMovie: Action<MoviesModel, MovieData>;
   currentGameMovie: MovieData | null;
   fetchGameMovies: Thunk<MoviesModel>;
@@ -135,6 +136,9 @@ export const movies: MoviesModel = {
     } finally {
       console.log("game created");
     }
+  }),
+  loadGameMovie: action((state,payload) => {
+    state.currentGameMovie = payload;
   }),
   fetchGameMovies: thunk(async (actions) => {
     const url = `${API_URL}`;

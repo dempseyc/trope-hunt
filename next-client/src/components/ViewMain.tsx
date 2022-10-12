@@ -1,26 +1,46 @@
 import { useEffect } from "react";
 import { useStoreState, useStoreActions } from "../store/store";
 import FilteredSearchList from "./FilteredSearchList";
-import MovieListItem from './MovieListItem'
+import MovieListItem from "./MovieListItem";
 
 const ViewMain = () => {
   const submitQuery = useStoreActions((actions) => actions.movies.submitQuery);
   const resetQuery = useStoreActions((actions) => actions.movies.resetQuery);
-  const chooseMovie = useStoreActions((actions) => actions.movies.chooseGameMovie);
-  const setGameOn = useStoreActions(actions => actions.setGameOn);
+  const chooseMovie = useStoreActions(
+    (actions) => actions.movies.chooseGameMovie
+  );
+  const setGameOn = useStoreActions((actions) => actions.setGameOn);
+  const gameOn = useStoreState((state) => state.gameOn);
   const query = useStoreState((state) => state.movies.query);
   const data = useStoreState((state) => state.movies.data);
   const loading = useStoreState((state) => state.movies.loading);
   const complete = useStoreState((state) => state.movies.complete);
+  const gameData = useStoreState((state) => state.users?.user?.data);
+  const loadMovie = useStoreActions((actions) => actions.movies.loadGameMovie);
+  const loadGame = useStoreActions((actions) => actions.game.loadGame);
+  const userReady = useStoreState((state) => state.users.ready);
+  const setCurrView = useStoreActions((actions) => actions.setCurrView);
 
-  const fetchGameMovies = useStoreActions((actions) => actions.movies.fetchGameMovies);
+  const fetchGameMovies = useStoreActions(
+    (actions) => actions.movies.fetchGameMovies
+  );
 
   useEffect(() => {
     if (!data) {
-      const fetch = async () => { await fetchGameMovies() };
+      const fetch = async () => {
+        await fetchGameMovies();
+      };
       fetch();
     }
   }, [fetchGameMovies, data]);
+
+  useEffect(() => {
+    if (!gameOn && gameData) {
+      loadMovie(gameData.movie);
+      loadGame(gameData);
+      setGameOn(true);
+    }
+  }, [gameOn, gameData, loadMovie, loadGame, setGameOn]);
 
   const filterFunction = (data, filter) => {
     const filterWords = filter.toLowerCase().split(" ");
@@ -29,9 +49,18 @@ const ViewMain = () => {
   };
 
   const actions = {
-    chooseMovie: (idx) => { chooseMovie(data[idx]) },
-    setGameOn: (boo) => { setGameOn(boo) }
-  }
+    chooseMovie: (idx) => {
+      if (userReady) {
+        chooseMovie(data[idx]);
+        setGameOn(true);
+      } else {
+        setCurrView(2);
+      }
+    },
+    setGameOn: (boo) => {
+      setGameOn(boo);
+    },
+  };
 
   return (
     <FilteredSearchList

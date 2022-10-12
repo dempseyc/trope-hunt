@@ -1,14 +1,21 @@
 import { Action, Thunk } from "easy-peasy";
 import { action, thunk } from "easy-peasy";
+import { MovieData } from "./movies";
 import axios from "axios";
 
 const API_URL = "/api";
 
 interface UpdateShape {
   id: string;
-  movieId: string | undefined;
+  movie: MovieData | undefined;
   bonus: string[] | [];
   points: number;
+}
+
+interface GameDataShape {
+  movie: MovieData;
+  tropes: any[];
+  score: number;
 }
 
 interface TropeData {
@@ -37,8 +44,10 @@ export interface GameModel {
   setStatus: Action<GameModel, StatusShape>;
   newTrope: Action<GameModel>;
   fetchTropes: Thunk<GameModel>;
+  saveGame: Thunk<GameModel, GameDataShape>;
   updateGame: Thunk<GameModel, UpdateShape>;
   addPoints: Action<GameModel, number>;
+  loadGame: Action<GameModel, GameDataShape>;
   tropeQty: number;
   score: number;
 }
@@ -71,7 +80,6 @@ export const game: GameModel = {
         count +=1;
       }
     }
-    console.log(count);
     state.tropes = payload;
    }),
   setStatus: action((state, payload)  => {
@@ -95,7 +103,7 @@ export const game: GameModel = {
     try {
       actions.setLoading(true);
       const response = await axios.get(url);
-      console.log(response);
+      // console.log(response.data);
       const results: TropeData[] = response.data;
       actions.setTropes(results);
     } catch (error) {
@@ -105,19 +113,20 @@ export const game: GameModel = {
     }
   }),
   addPoints: action((state, payload) => { state.score += payload }),
-  updateGame: thunk(async (actions, payload) => {
-    const token = localStorage.token;
-    const {id, movieId, bonus, points} = payload;
-    actions.setStatus({id, status: "found"});
-    actions.addPoints(points);
-    actions.newTrope();
-    const url = `${API_URL}/finds/create`;
+  loadGame: action((state, payload) => {
+    state.tropes = payload.tropes;
+    state.score = payload.score;
+  }),
+  saveGame: thunk( async(actions,payload) => {
+    const { token, id } = localStorage;
+    if (!token) {
+      return;
+    }
+    const url = `${API_URL}/users/${id}/update`;
+    actions.setLoading(true);
     try {
-      actions.setLoading(true);
-      const response = await axios.post(url,{
-        movie_id: movieId,
-        trope_id: id,
-        bonus_memos: bonus
+      await axios.patch(url, {
+        data: payload
       },{
         headers: {
           'Content-Type': 'application/json',
@@ -125,7 +134,34 @@ export const game: GameModel = {
           'Authorization': `Bearer ${token}`
         }
       });
-      console.log(response);
+    } catch (error) {
+      actions.setError(true);
+    } finally {
+      actions.setLoading(false);
+    }
+  }),
+  updateGame: thunk(async (actions, payload) => {
+    const token = localStorage.token;
+    const headers = {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'Authorization': `Bearer ${token}`
+    };
+    const {movie, id, bonus, points} = payload;
+    const movie_id = movie._id;
+    actions.setStatus({id, status: "found"});
+    actions.addPoints(points);
+    actions.newTrope();
+    const url = `${API_URL}/finds/create`;
+    try {
+      actions.setLoading(true);
+      await axios.post(url,{
+        movie_id,
+        trope_id: id,
+        bonus_memos: bonus
+      },{
+        headers: headers
+      });
     } catch (error) {
       actions.setError(true);
     } finally {

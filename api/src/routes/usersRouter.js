@@ -6,7 +6,7 @@ const usersRouter = express.Router();
 
 usersRouter.get('/:id', usersController.show);
 usersRouter.post('/create', usersController.create);
-usersRouter.put('/:id/update', usersController.update);
+usersRouter.patch('/:id/update', usersController.update);
 usersRouter.post('/:id/delete', usersController.delete);
 
 module.exports = usersRouter;

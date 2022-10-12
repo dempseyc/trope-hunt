@@ -73,8 +73,11 @@ const TropeListItem = (props) => {
   };
   
   const handleClaim = () => {
+    console.log(bonus.filter((b, i) => bonusCheck[i]));
     const points = data.points + bonusCheck.length * data.bonus_pts;
     actions.claimTrope(data._id, bonus.filter((b, i) => bonusCheck[i]), points);
+    // actions.saveGame();
+    handleClick(null);
   };
 
   const handleBonus = (_, i) => {

@@ -63,7 +63,6 @@ const MovieListItem = (props) => {
         variant="outlined"
         onClick={() => { 
           actions.chooseMovie(idx);
-          actions.setGameOn(true);
         }}
         >Choose Movie</Button>
     </>
