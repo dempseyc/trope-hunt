@@ -10,6 +10,7 @@ const TropeCard = (props) => {
   const fetchTropes = useStoreActions((actions) => actions.game.fetchTropes);
   const movie = useStoreState((state) => state.movies.currentGameMovie);
   const score = useStoreState((state) => state.game.score);
+  const gameOn = useStoreState((state) => state.gameOn);
   const saveGame = useStoreActions((actions) => actions.game.saveGame);
 
   // const saving = () => saveGame({movie, tropes, score});
@@ -31,7 +32,7 @@ const TropeCard = (props) => {
   }, [fetchTropes, tropes]);
 
   useEffect(() => {
-    saveGame({movie, tropes, score});
+    saveGame({gameOn, movie, tropes, score});
   },[movie,tropes,score, saveGame])
 
   const filteredTropes = tropes?.filter((trope) => trope.status === "card");

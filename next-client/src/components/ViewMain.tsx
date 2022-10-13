@@ -18,6 +18,7 @@ const ViewMain = () => {
   const gameData = useStoreState((state) => state.users?.user?.data);
   const loadMovie = useStoreActions((actions) => actions.movies.loadGameMovie);
   const loadGame = useStoreActions((actions) => actions.game.loadGame);
+  const gameLoaded = useStoreState((state) => state.game.gameLoaded);
   const userReady = useStoreState((state) => state.users.ready);
   const setCurrView = useStoreActions((actions) => actions.setCurrView);
 
@@ -35,7 +36,7 @@ const ViewMain = () => {
   }, [fetchGameMovies, data]);
 
   useEffect(() => {
-    if (!gameOn && gameData) {
+    if (!gameOn && gameData?.gameOn && !gameLoaded) {
       loadMovie(gameData.movie);
       loadGame(gameData);
       setGameOn(true);

@@ -13,7 +13,8 @@ interface UpdateShape {
 }
 
 interface GameDataShape {
-  movie: MovieData;
+  gameOn: boolean;
+  movie?: MovieData;
   tropes: any[];
   score: number;
 }
@@ -48,6 +49,7 @@ export interface GameModel {
   updateGame: Thunk<GameModel, UpdateShape>;
   addPoints: Action<GameModel, number>;
   loadGame: Action<GameModel, GameDataShape>;
+  gameLoaded: boolean;
   tropeQty: number;
   score: number;
 }
@@ -59,6 +61,7 @@ export const game: GameModel = {
   tropes: null,
   tropeQty: 12,
   score: 0,
+  gameLoaded: false,
 
   setError: action((state, payload) => {
     state.error = payload;
@@ -116,6 +119,7 @@ export const game: GameModel = {
   loadGame: action((state, payload) => {
     state.tropes = payload.tropes;
     state.score = payload.score;
+    state.gameLoaded = true;
   }),
   saveGame: thunk( async(actions,payload) => {
     const { token, id } = localStorage;
@@ -142,6 +146,9 @@ export const game: GameModel = {
   }),
   updateGame: thunk(async (actions, payload) => {
     const token = localStorage.token;
+    if (!token) {
+      return;
+    }
     const headers = {
       'Content-Type': 'application/json',
       Accept: 'application/json',

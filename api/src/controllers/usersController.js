@@ -73,7 +73,7 @@ exports.update = function (req, res) {
       return res.json(err);
     }
   }
-  if (data && _id) {
+  else if (data && _id) {
     User.findOneAndUpdate(
       { _id: _id },
       {

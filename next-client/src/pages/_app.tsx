@@ -11,7 +11,6 @@ import '../../styles/CSSreset.css'
 import '../../styles/globals.css'
 import '../../styles/App.scss'
 import '../../styles/NavBar.scss'
-import '../../styles/RollingStyle.scss'
 
 const StoreProviderOverride = StoreProvider as any;
 
