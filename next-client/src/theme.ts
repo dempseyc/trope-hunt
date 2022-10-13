@@ -35,6 +35,7 @@ const theme = createTheme({
         styleOverrides: {
           root: {
             fontSize: 'inherit',
+            lineHeight: 'inherit',
             margin: '0.1rem',
             ':focus': { //same as :hover
               webkitTextDecoration: 'none',

@@ -271,10 +271,26 @@ $default-margin: 0.5em;
 }
 
 .view-header {
+  margin: 0.1em;
+  display: flex;
+  justify-content: center;
   font-size: 1.4em;
   line-height: 1.4em;
   font-weight: bolder;
   max-height: 2em;
+  .icon {
+    flex-basis: 35%;
+  }
+  .title-container {
+    flex-basis: 55%;
+    padding-top: 0.1em;
+    background-color: goldenrod;
+  }
+}
+
+.title-on-button {
+  color: white;
+  font-weight: bold;
 }
 
 button {

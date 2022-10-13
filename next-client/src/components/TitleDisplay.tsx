@@ -9,14 +9,14 @@ const TitleDisplay = (props) => {
   const calcFontSize = (str, maxFontSize) => {
     const n = str?.length;
     let numLines = 1;
-    if (n > 20) {
+    if (n > 15) {
       numLines = 2;
     }
-    if (n > 40) {
+    if (n > 30) {
       numLines = 3;
     }
     let eachLineLengthApprox = n / numLines;
-    const fontSize = (maxFontSize * 15) / eachLineLengthApprox / numLines;
+    const fontSize = (maxFontSize * 12) / eachLineLengthApprox / numLines;
     return Math.trunc(fontSize * 100) * 0.01;
   };
   const size = calcFontSize(text, 1.5);
@@ -34,12 +34,12 @@ const TitleDisplay = (props) => {
   };
 
   const DialogButton = (
+      <div className="title-container" style={{ fontSize: `${size}em`, lineHeight: 1.25}}>
     <Button onClick={() => setOpen(true)}>
-      <div className="title-container" style={{ fontSize: `${size}em` }}>
-        {text}
+        <span className="title-on-button">{text}</span>
         {children}
-      </div>
     </Button>
+      </div>
   );
 
   const Choices = (
@@ -56,7 +56,7 @@ const TitleDisplay = (props) => {
   return (
     <>
       {DialogButton}
-      <Dialog onClose={handleMovieEnd} open={open}>
+      <Dialog onClose={()=>{setOpen(false)}} open={open}>
         <DialogTitle>{`Finished playing ${props.text}?`}</DialogTitle>
         {Choices}
       </Dialog>

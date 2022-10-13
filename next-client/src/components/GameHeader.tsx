@@ -22,8 +22,7 @@ const GameHeader = () => {
   return (
     <>
         <TreeCounter number={score*0.1}/>
-        <TitleDisplay text={movieTitle} handleMovieEnd={handleMovieEnd} style={{display: "inline-flex"}}>
-            <SwapCallsRoundedIcon />
+        <TitleDisplay text={movieTitle} handleMovieEnd={handleMovieEnd} style={{display: "inline-flex", justifyContent: "center"}}>
         </TitleDisplay>
     </>
   );
