@@ -10,7 +10,7 @@ const UserDetails = (props) => {
          <span>
          {details.email}
          </span>
-         <Button onClick={logoutUser}>Sign Out</Button>
+         <Button onClick={(e) => logoutUser()}>Sign Out</Button>
       </div>
 
    );

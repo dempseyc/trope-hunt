@@ -49,6 +49,7 @@ export interface GameModel {
   updateGame: Thunk<GameModel, UpdateShape>;
   addPoints: Action<GameModel, number>;
   loadGame: Action<GameModel, GameDataShape>;
+  clearGame: Action<GameModel>;
   gameLoaded: boolean;
   tropeQty: number;
   score: number;
@@ -174,5 +175,10 @@ export const game: GameModel = {
     } finally {
       actions.setLoading(false);
     }
-  })
+  }),
+  clearGame: action((state, payload) => { 
+    state.tropes = null;
+    state.score = 0;
+    state.gameLoaded = false;
+  }),
 };

@@ -1,6 +1,5 @@
 import { Action, Thunk } from "easy-peasy";
 import { action, thunk } from "easy-peasy";
-import { MovieData } from "./movies";
 import axios from "axios";
 
 const API_URL = "/";
@@ -81,13 +80,13 @@ export const users: UsersModel = {
   createUser: thunk(async (actions, payload) => {
     const url = `${API_URL}api/users/create`;
     try {
-      const response = await axios.post(url, {
+      await axios.post(url, {
         user: {
           email: payload.email,
           password: payload.password,
         },
       });
-      // give message user created, logging in
+      actions.setMessages("user created");
       actions.loginUser(payload);
     } catch (error) {
       actions.setError(true);

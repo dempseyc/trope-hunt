@@ -7,16 +7,28 @@ const ViewUser = () => {
   const ready = useStoreState((state) => state.users.ready);
   const user = useStoreState((state) => state.users.user);
   const logoutUser = useStoreActions((actions) => actions.users.logoutUser);
+  const clearMovie = useStoreActions(
+    (actions) => actions.movies.clearGameMovie
+  );
+  const clearGame = useStoreActions((actions) => actions.game.clearGame);
   const fetchUser = useStoreActions((actions) => actions.users.fetchUser);
+  const setGameOn = useStoreActions((actions) => actions.setGameOn);
+
+  const onLogout = () => {
+    logoutUser();
+    clearGame();
+    clearMovie();
+    setGameOn(false);
+  };
 
   useEffect(() => {
-		fetchUser(null);
-	}, [])
+    fetchUser(null);
+  }, []);
 
   return (
     <>
       {ready ? (
-        <UserDetails user={user} logoutUser={logoutUser} />
+        <UserDetails user={user} logoutUser={onLogout} />
       ) : (
         <LoginModule />
       )}

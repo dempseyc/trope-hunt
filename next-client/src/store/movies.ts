@@ -43,6 +43,7 @@ export interface MoviesModel {
   resetQuery: Action<MoviesModel, any>;
   chooseGameMovie: Thunk<MoviesModel, MovieData>;
   loadGameMovie: Action<MoviesModel, MovieData>;
+  clearGameMovie: Action<MoviesModel>;
   setCurrentGameMovie: Action<MoviesModel, MovieData>;
   currentGameMovie: MovieData | null;
   fetchGameMovies: Thunk<MoviesModel>;
@@ -139,6 +140,9 @@ export const movies: MoviesModel = {
   }),
   loadGameMovie: action((state,payload) => {
     state.currentGameMovie = payload;
+  }),
+  clearGameMovie: action((state,payload) => {
+    state.currentGameMovie = null;
   }),
   fetchGameMovies: thunk(async (actions) => {
     const url = `${API_URL}`;

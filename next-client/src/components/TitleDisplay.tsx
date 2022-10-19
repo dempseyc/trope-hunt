@@ -9,15 +9,15 @@ const TitleDisplay = (props) => {
   const calcFontSize = (str, maxFontSize) => {
     const n = str?.length;
     let numLines = 1;
-    if (n > 15) {
+    if (n > 20) {
       numLines = 2;
     }
-    if (n > 30) {
+    if (n > 40) {
       numLines = 3;
     }
     let eachLineLengthApprox = n / numLines;
     const fontSize = (maxFontSize * 12) / eachLineLengthApprox / numLines;
-    return Math.trunc(fontSize * 100) * 0.01;
+    return Math.trunc(fontSize * 100) * 0.04;
   };
   const size = calcFontSize(text, 1.5);
 
@@ -34,7 +34,7 @@ const TitleDisplay = (props) => {
   };
 
   const DialogButton = (
-      <div className="title-container" style={{ fontSize: `${size}em`, lineHeight: 1.25}}>
+      <div className="title-container" style={{ fontSize: `${size}vw`, lineHeight: 1.25}}>
     <Button onClick={() => setOpen(true)}>
         <span className="title-on-button">{text}</span>
         {children}

@@ -1,13 +1,15 @@
 import { createTheme } from '@mui/material/styles'
-import { blueGrey, grey } from '@mui/material/colors';
+import { teal, red } from '@mui/material/colors';
 
 const theme = createTheme({
-    palette: {
-      secondary: blueGrey,
-      primary: {
-        main: grey[500],
-      },
+  palette: {
+    primary: {
+      main: teal[900],
     },
+    secondary: {
+      main: red[900],
+    },
+  },
     typography: {
       fontFamily: 'sans-serif',
       fontSize: 20,
@@ -36,21 +38,21 @@ const theme = createTheme({
           root: {
             fontSize: 'inherit',
             lineHeight: 'inherit',
-            margin: '0.1rem',
+            margin: '0.2em',
             ':focus': { //same as :hover
               webkitTextDecoration: 'none',
               textDecoration: 'none',
               backgroundColor: 'rgba(158, 158, 158, 0.04)',
               border: '1px solid #9e9e9e',
             },
-            raisedPrimary: {
-              color: blueGrey[800],
-            },
-            raisedSecondary: {
-              color: grey[800],
-            },
+            // raisedPrimary: {
+            //   color: blueGrey[800],
+            // },
+            // raisedSecondary: {
+            //   color: grey[800],
+            // },
             outlinedPrimary: {
-              color: grey[50],
+              color: teal[500],
             }
           },
         },
@@ -73,7 +75,7 @@ const theme = createTheme({
             height: '100%',
           },
           indicator: {
-            backgroundColor: blueGrey[300],
+            // backgroundColor: blueGrey[300],
             height: '4px',
             borderRadius: '2px 2px 0 0',
             // boxShadow: `0 0px 8px ${blueGrey[900]}`
