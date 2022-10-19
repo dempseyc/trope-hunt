@@ -89,10 +89,10 @@ exports.update = async function (req, res) {
   }
 };
 
-exports.delete = (req, res) => {
+exports.delete = async function (req, res) {
   console.log("user delete");
   try {
-    const doc = User.findOneAndDelete({ _id: res.locals.user._id }).exec();
+    const doc = await User.findOneAndDelete({ _id: res.locals.user._id }).exec();
     if (doc) {
       return res.json({ message: "User Deleted" });
     } else {

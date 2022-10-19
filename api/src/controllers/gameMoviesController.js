@@ -1,100 +1,97 @@
-const GameMovie = require('../models/GameMovie');
+const { Error } = require("mongoose");
+const GameMovie = require("../models/GameMovie");
 
-exports.index = function(req,res) {
-    GameMovie.find(
-        {},
-        (err,docs) => {
-            let results = ['no results'];
-            if (err) {
-                res.send(err);
-            } else if (docs.length>0) { 
-                results = docs;           
-                res.send(results);
-            }
-        }
-	);
+exports.index = async function (req, res) {
+  try {
+    const docs = await GameMovie.find({}).exec();
+    let results = ["no results"];
+    if (docs.length) {
+      results = docs;
+    }
+		return res.json(results);
+  } catch (error) {
+    res.status(400).json({ message: `${error.message}` });
+  }
 };
 
-exports.show = function(req,res) {
-    console.log('req', req.params)
-    GameMovie.findById(
-        req.params.id, 
-        (err,doc) => {
-            if (err) {
-                return res.send(err);
-            } else {
-                return res.json(doc);
-            }
-        }
-    );
+exports.show = async function (req, res) {
+  const { id } = req.params;
+  try {
+    const doc = await GameMovie.findById(id).exec();
+    if (doc) {
+      return res.json(doc);
+    } else {
+      throw new Error("error in movie show");
+    }
+  } catch (error) {
+    res.status(400).json({ message: `${error.message}` });
+  }
 };
 
-exports.create = function(req, res) {
+exports.create = async function (req, res) {
+  try {
     const params = req.body.gameMovie;
-    params.created_by = res.locals.user._id;
-    GameMovie.findOneAndUpdate(
-        { tmdb_id: params.tmdb_id },
-        { $set: params },
-        {
-            new: true,   // return new doc if one is upserted
-            upsert: true // insert the document if it does not exist
-        },
-        (err,doc) => {
-            if (err) {
-                res.send(err);
-            } else {
-                res.json(doc);
-            }
-        }
-    );
- };
+    const doc = await GameMovie.findOneAndUpdate(
+      { tmdb_id: params.tmdb_id },
+      { $set: params },
+      {
+        new: true, // return updated doc
+        upsert: true, // insert the document if it does not exist
+      }
+    ).exec();
+    if (doc) {
+      return res.json(doc);
+    } else {
+      throw new Error("error in movie create");
+    }
+  } catch (error) {
+    res.status(400).json({ message: `${error.message}` });
+  }
+};
 
- exports.update = function(req, res) {
+exports.update = async function (req, res) {
+  try {
     const params = req.body;
-    
-    GameMovie.findOneAndUpdate(
-        {"_id": req.params.id},
-        { $set: params },
-        {new: true},
-        (err,doc) => {
-            if (err) {
-                res.send(err);
-            } else {
-                res.json(doc);
-            }
-        }
-    );
- };
+    const doc = await GameMovie.findOneAndUpdate(
+      { _id: req.params.id },
+      { $set: params },
+      { new: true }
+    ).exec();
+    if (doc) {
+      return res.json(doc);
+    } else {
+      throw new Error("error in movie update");
+    }
+  } catch (error) {
+    res.status(400).json({ message: `${error.message}` });
+  }
+};
 
- exports.delete = (req, res) => {
-     console.log(req.params, 'params');
-     GameMovie.findOneAndDelete(
-        {"_id": req.params.id},
-        (err,doc) => {
-            if (err) {
-                res.send(err);
-            } else {
-                const response = doc._id;
-                res.send(response);
-            }
-        }
-    );
- };
-
- exports.search = function(req,res) {
-	const query = req.body;
-	console.log(query, 'search');
-    GameMovie.find(
-        {$text: {$search: query}}
-        )
-       .limit(10)
-       .exec((err,docs) => {
-		let results = ['no results'];
-		if (err) {
-			res.send(err);
-		} else if (docs.length>0) {            
-			results = docs
+exports.delete = async function (req, res) {
+  try {
+		const doc = await GameMovie.findOneAndDelete({ _id: req.params.id }).exec();
+			if (doc) {
+				return res.json({message: `movie deleted ${doc._id}`});
+			} else {
+				throw new Error("error in movie delete");
+			}
+		} catch (error) {
+			res.status(400).json({ message: `${error.message}` });
 		}
-		res.send(results)
-	});
+};
+
+exports.search = async function (req, res) {
+	try {
+		const {query} = req.body;
+		let results = ["no results"];
+		const docs = await GameMovie.find({ $text: { $search: "Santa" } })
+    .limit(10)
+    .exec();
+		if (docs.length) {
+			results = docs;
+    }
+		return res.json(results);
+  } catch (error) {
+    res.status(400).json({ message: `${error.message}` });
+  }
 };

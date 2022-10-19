@@ -133,7 +133,9 @@ app.use('/api/users/:id/update', pwCheck);
 app.use('/api/tropes', exclude('/',tokenCheck));
 app.use('/api/tropes', tropesRouter);
 
-app.use('/api/gameMovies', exclude('/',tokenCheck));
+app.use('/api/gameMovies/create', tokenCheck);
+app.use('/api/gameMovies/delete', tokenCheck);
+app.use('/api/gameMovies/update', tokenCheck);
 app.use('/api/gameMovies', gameMoviesRouter);
 
 app.use('/api/finds', tokenCheck);

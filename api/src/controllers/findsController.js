@@ -1,81 +1,91 @@
 const Find = require("../models/Find");
-
-exports.index = function (req, res) {
-  Find.find({}, (err, docs) => {
-    const results = ["no results"];
-    if (err) {
-      res.send(err);
-    } else if (docs.length > 0) {
-      res.send(results);
+//81
+exports.index = async function (req, res) {
+  try {
+    const docs = await Find.find({}).exec();
+    let results = ["no results"];
+    if (docs.length) {
+      results = docs;
     }
-  });
+    return res.json(docs);
+  } catch (error) {
+    res.status(400).json({ message: `${error.message}` });
+  }
 };
 
-exports.show = function (req, res) {
-  console.log("req", req.params);
-  Find.findById(req.params.id, (err, doc) => {
-    if (err) {
-      return res.send(err);
-    } else {
+exports.show = async function (req, res) {
+  const { id } = req.params;
+  try {
+    const doc = await Find.findById(id).exec();
+    if (doc) {
       return res.json(doc);
-    }
-  });
-};
-
-exports.create = function (req, res) {
-  const params = req.body;
-  const found_by = res.locals.user._id;
-	const found_on = new Date().getTime();
-  Find.findOneAndUpdate(
-    {
-      movie_id: params.movie_id,
-      trope_id: params.trope_id,
-    },
-    {
-      $push: {
-        found_by: found_by,
-        found_on: found_on,
-      },
-    },
-    {
-      new: true, // return new doc if one is upserted
-      upsert: true, // insert the document if it does not exist
-    },
-    (err, doc) => {
-      if (err) {
-        res.send(err);
-      } else {
-        res.json(doc);
-      }
-    }
-  );
-};
-
-exports.update = function (req, res) {
-  const params = req.body;
-
-  Find.findOneAndUpdate(
-    { _id: req.params.id },
-    { $set: params },
-    { new: true },
-    (err, doc) => {
-      if (err) {
-        res.send(err);
-      } else {
-        res.json(doc);
-      }
-    }
-  );
-};
-
-exports.delete = (req, res) => {
-  console.log(req.params, "params");
-  Find.findOneAndDelete({ _id: req.params.id }, (err, doc) => {
-    if (err) {
-      res.send(err);
     } else {
-      const response = doc._id;
-      res.send(response);
+      throw new Error("error in finds show");
     }
-  });
+  } catch (error) {
+    res.status(400).json({ message: `${error.message}` });
+  }
+};
+
+exports.create = async function (req, res) {
+  try {
+    const params = req.body;
+    const found_by = res.locals.user._id;
+    const found_on = new Date().getTime();
+    const doc = await Find.findOneAndUpdate(
+      {
+        movie_id: params.movie_id,
+        trope_id: params.trope_id,
+      },
+      {
+        $push: {
+          found_by: found_by,
+          found_on: found_on,
+        },
+      },
+      {
+        new: true, // return new doc if one is upserted
+        upsert: true, // insert the document if it does not exist
+      }
+    ).exec();
+    if (doc) {
+      return res.json(doc);
+    } else {
+      throw new Error("error in finds create");
+    }
+  } catch (error) {
+    res.status(400).json({ message: `${error.message}` });
+  }
+};
+
+exports.update = async function (req, res) {
+  try {
+    const params = req.body;
+    const doc = await Find.findOneAndUpdate(
+      { _id: req.params.id },
+      { $set: params },
+      { new: true }
+    ).exec();
+    if (doc) {
+      return res.json(doc);
+    } else {
+      throw new Error("error in finds update");
+    }
+  } catch (error) {
+    res.status(400).json({ message: `${error.message}` });
+  }
+};
+
+exports.delete = async function (req, res) {
+  try {
+    const _id = req.params.id;
+    const doc = await Find.findOneAndDelete({ _id }).exec();
+    if (doc) {
+      return res.json({ message: `find deleted ${doc._id}` });
+    } else {
+      throw new Error("error in movie delete");
+    }
+  } catch (error) {
+    res.status(400).json({ message: `${error.message}` });
+  }
 };
