@@ -73,9 +73,9 @@ const TropeListItem = (props) => {
   };
   
   const handleClaim = () => {
-    console.log(bonus.filter((b, i) => bonusCheck[i]));
-    const points = data.points + bonusCheck.length * data.bonus_pts;
-    actions.claimTrope(data._id, bonus.filter((b, i) => bonusCheck[i]), points);
+    const boni = bonus.filter((b, i) => bonusCheck[i]);
+    const points = data.points + (boni.length * data.bonus_pts);
+    actions.claimTrope(data._id, boni, points);
     handleClick(null);
   };
 
