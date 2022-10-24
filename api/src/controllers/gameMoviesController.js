@@ -84,7 +84,7 @@ exports.search = async function (req, res) {
 	try {
 		const {query} = req.body;
 		let results = ["no results"];
-		const docs = await GameMovie.find({ $text: { $search: "Santa" } })
+		const docs = await GameMovie.find({ $text: { $search: query } })
     .limit(10)
     .exec();
 		if (docs.length) {

@@ -32,6 +32,7 @@ exports.create = async function (req, res) {
       let user = new User(params);
       const response = await user.save();
       if (response) {
+        response.pw_hash = "secured";
         return res.json(response);
       }
     } else {
@@ -52,15 +53,16 @@ exports.update = async function (req, res) {
       if (pw_hash) {
         let params = req.body;
         params.pw_hash = pw_hash;
-        const doc = await User.findOneAndUpdate(
+        const response = await User.findOneAndUpdate(
           { _id: _id },
           {
             pw_hash: params.pw_hash,
           },
           { new: true }
         ).exec();
-        if (doc) {
-          return res.json(doc);
+        if (response) {
+          response.pw_hash = "secured";
+          return res.json(response);
         } else {
           throw new Error("error in user update");
         }
