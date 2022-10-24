@@ -103,8 +103,7 @@ export const users: UsersModel = {
   loginUser: thunk(async (actions, payload) => {
     console.log(payload);
     actions.setCredentials(payload);
-    // should use Buffer.from(str, 'base64');
-    const basicAuth = "Basic " + btoa(payload.email + ":" + payload.password);
+    const basicAuth = "Basic " + Buffer.from(payload.email + ":" + payload.password, 'base64');
     let url = `${API_URL}api/auth/login`;
     try {
       const response = await axios.post(

@@ -6,6 +6,7 @@ const CarouUserForm = (props) => {
   const {createMode} = props;
   const createUser = useStoreActions((actions) => actions.users.createUser);
   const loginUser = useStoreActions((actions) => actions.users.loginUser);
+  const setMessages = useStoreActions((actions) => actions.users.setMessages);
 
   const handleSubmitPassword = (values) => {
     console.log("loginUser")
@@ -23,7 +24,7 @@ const CarouUserForm = (props) => {
         password: values[1],
       });
     } else {
-      console.log("didnt match");
+      setMessages("Passwords must match");
     }
   };
 
@@ -37,13 +38,13 @@ const CarouUserForm = (props) => {
     {
       name: "password",
       valid: (value) => { return value.length > 1 ;  },
-      error: "Password must be more than 1 characters.",
+      error: "At least 6 characters, one number, one letter",
       ref: useRef(),
     },
     {
       name: "verify password",
       valid: (value, password) => { return value.length > 1 ; },
-      error: "Password must be more than 1 characters.",
+      error: "At least 6 characters, one number, one letter.",
       ref: useRef(),
     }
   ];
