@@ -80,14 +80,19 @@ export const users: UsersModel = {
   createUser: thunk(async (actions, payload) => {
     const url = `${API_URL}api/users/create`;
     try {
-      await axios.post(url, {
+      const response = await axios.post(url, {
         user: {
           email: payload.email,
           password: payload.password,
         },
       });
-      actions.setMessages("user created");
-      actions.loginUser(payload);
+      if (response.data._id) {
+        actions.setMessages("user created");
+        actions.loginUser(payload);
+      } else if (response.data.message) {
+        actions.setMessages(response.data.message);
+        throw new Error();
+      }
     } catch (error) {
       actions.setError(true);
     } finally {
