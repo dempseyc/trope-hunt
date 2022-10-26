@@ -119,6 +119,18 @@ $default-margin: 0.5em;
   font-size: 1.5em;
 }
 
+.movie-details {
+  display: block;
+  .movie-image {
+    float: left;
+    margin-right: 0.5em;
+  }
+  .movie-description {
+    line-height: 1.2;
+    text-align: left;
+  }
+}
+
 @media screen and (min-width:520px) {
   body {
       font-size: 3vw;

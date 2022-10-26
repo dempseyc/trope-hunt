@@ -4,8 +4,6 @@ const API_URL = process.env.API_URL_DEV;
 const proxy = httpProxy.createProxyServer();
 // Make sure that we don't parse JSON bodies on this route:
 
-console.log(API_URL, "API_URL")
-
 export const config = {
     api: {
         bodyParser: false

@@ -7,6 +7,7 @@ import MuiAccordionSummary, {
 } from "@mui/material/AccordionSummary";
 import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Button from "@mui/material/Button";
+import Image from "next/image";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -52,22 +53,32 @@ const MovieListItem = (props) => {
   const text = `${data.original_title} ${date}`;
 
   const handleChange = (event: React.SyntheticEvent) => {
-      handleClick(idx);
-    };
+    handleClick(idx);
+  };
 
   const details = (
     <>
-      <div className="movie-image"></div>
-      <div className="movie-description">{overview}</div>
+      <div className="movie-details">
+        <div className="movie-image">
+          <Image
+            width="100"
+            height="150"
+            src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
+          />
+        </div>
+        <div className="movie-description">{overview}</div>
+      </div>
       <Button
         variant="outlined"
         color="secondary"
-        onClick={() => { 
+        onClick={() => {
           actions.chooseMovie(data);
         }}
-        >Choose Movie</Button>
+      >
+        Choose Movie
+      </Button>
     </>
-  )
+  );
 
   return (
     <div className="movie-list-item">

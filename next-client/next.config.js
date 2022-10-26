@@ -31,6 +31,9 @@ const nextConfig = {
     ];
   },
   compress: false,
+  images: {
+    domains: ['image.tmdb.org'],
+  },
 }
 
 module.exports = nextConfig

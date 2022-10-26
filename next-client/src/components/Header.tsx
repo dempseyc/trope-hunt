@@ -11,6 +11,8 @@ const Coffee = () => {
       href="https://www.buymeacoffee.com/craigdempsQ"
     >
       <Image
+        width="33%"
+        height="100%"
         className="coffeeImage"
         src="/000000-0.png"
         alt="Buy me a coffee"
