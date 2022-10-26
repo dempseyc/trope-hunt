@@ -18,7 +18,7 @@ const TropeCard = (props) => {
   const actions = {
     claimTrope: (id, bonus, points) => {
       updateGame({ movie, id, bonus, points });
-    }
+    },
   };
 
   useEffect(() => {
@@ -32,8 +32,8 @@ const TropeCard = (props) => {
   }, [fetchTropes, tropes]);
 
   useEffect(() => {
-    saveGame({gameOn, movie, tropes, score});
-  },[movie,tropes,score, saveGame])
+    saveGame({ gameOn, movie, tropes, score });
+  }, [gameOn, movie, tropes, score, saveGame]);
 
   const filteredTropes = tropes?.filter((trope) => trope.status === "card");
 

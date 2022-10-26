@@ -110,9 +110,9 @@ const TreeCounter = (props) => {
   const num = number % 10;
   const num2 = Math.floor(number / 10);
   return (
-    <div className="icon baseline" style={{display: "inline-flex"}}>
-      <span className="trees" >
-        <Tree num={num} /> + {`${num2}`}
+    <div className="icon baseline" style={{display: "inline-flex"}} aria-label={`Score ${number}`}>
+      <span className="trees-wrapper" >
+        <Tree num={num} /><span className="trees"> + {`${num2}`}</span>
         <Tree num={10} />
       </span>
     </div>

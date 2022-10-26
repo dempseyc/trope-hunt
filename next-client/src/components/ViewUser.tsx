@@ -24,7 +24,7 @@ const ViewUser = () => {
 
   useEffect(() => {
     fetchUser(null);
-  }, []);
+  }, [fetchUser]);
 
   return (
     <>

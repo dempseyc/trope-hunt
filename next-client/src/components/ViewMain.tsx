@@ -41,7 +41,7 @@ const ViewMain = () => {
       loadGame(gameData);
       setGameOn(true);
     }
-  }, [gameOn, gameData, loadMovie, loadGame, setGameOn]);
+  }, [gameOn, gameData, gameLoaded, loadMovie, loadGame, setGameOn]);
 
   const filterFunction = (data, filter) => {
     const filterWords = filter.toLowerCase().split(" ");

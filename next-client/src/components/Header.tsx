@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 const Coffee = () => {
     return (
@@ -6,9 +7,10 @@ const Coffee = () => {
     <a
       className="buyButton"
       target="_blank"
+      rel="noreferrer"
       href="https://www.buymeacoffee.com/craigdempsQ"
     >
-      <img
+      <Image
         className="coffeeImage"
         src="/000000-0.png"
         alt="Buy me a coffee"
