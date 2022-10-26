@@ -11,6 +11,7 @@ import '../../styles/CSSreset.css'
 import '../../styles/globals.css'
 import '../../styles/App.scss'
 import '../../styles/NavBar.scss'
+import '../../styles/buyButton.scss'
 
 const StoreProviderOverride = StoreProvider as any;
 

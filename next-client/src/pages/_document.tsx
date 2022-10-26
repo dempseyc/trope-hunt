@@ -12,11 +12,10 @@ export default class MyDocument extends Document {
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link rel="shortcut icon" href="/favicon.ico" />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-          />
-          <meta name="emotion-insertion-point" content="" />
+          <link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+<link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&family=Roboto+Serif:opsz,wght@8..144,400;8..144,800&display=swap" rel="stylesheet"/>
+<meta name="emotion-insertion-point" content="" />
         </Head>
         <body>
           <Main />

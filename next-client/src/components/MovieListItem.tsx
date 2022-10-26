@@ -61,8 +61,9 @@ const MovieListItem = (props) => {
       <div className="movie-description">{overview}</div>
       <Button
         variant="outlined"
+        color="secondary"
         onClick={() => { 
-          actions.chooseMovie(idx);
+          actions.chooseMovie(data);
         }}
         >Choose Movie</Button>
     </>

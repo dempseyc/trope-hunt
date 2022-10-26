@@ -5,7 +5,12 @@ import SwiperView from "components/SwiperView";
 import SP_TAB_Layout from "components/SP_TAB_Layout";
 import Router from "next/router";
 
-const HOME_VIEWS = ["main", "chat", "user", "more"];
+const HOME_VIEWS = [
+  "main",
+  // "chat",
+  "user",
+  "more"
+];
 
 const Home = () => {
   console.log("home render");

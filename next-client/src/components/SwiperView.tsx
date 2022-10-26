@@ -5,6 +5,11 @@ import ViewGeneric from "./ViewGeneric";
 import ViewMore from "./ViewMore";
 import ViewGame from "./ViewGame";
 import GameHeader from "./GameHeader";
+import Paper from "@mui/material/Paper";
+import Card from "@mui/material/Card";
+import Box from "@mui/material/Box";
+
+
 
 const SwiperView = (props) => {
   const { viewName, index } = props;
@@ -52,7 +57,7 @@ const SwiperView = (props) => {
       aria-current={index !== currView ? "false" : "page"}
       className={`${viewName} swiper-view sv-${index}`}
     >
-      {header}
+      <Box sx={{backgroundColor:"primary.light"}}>{header}</Box>
       <div className="view-content">{view}</div>
     </div>
   );

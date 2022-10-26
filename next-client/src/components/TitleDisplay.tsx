@@ -6,20 +6,6 @@ import Button from "@mui/material/Button";
 const TitleDisplay = (props) => {
   const { text, handleMovieEnd, children } = props;
   const [open, setOpen] = useState(false);
-  const calcFontSize = (str, maxFontSize) => {
-    const n = str?.length;
-    let numLines = 1;
-    if (n > 20) {
-      numLines = 2;
-    }
-    if (n > 40) {
-      numLines = 3;
-    }
-    let eachLineLengthApprox = n / numLines;
-    const fontSize = (maxFontSize * 12) / eachLineLengthApprox / numLines;
-    return Math.trunc(fontSize * 100) * 0.04;
-  };
-  const size = calcFontSize(text, 1.5);
 
   const onClose = (value) => {
     if (value) {
@@ -32,23 +18,32 @@ const TitleDisplay = (props) => {
   const handleClick = (value) => {
     onClose(value);
   };
+  const calcFontSize = (n) => {
+    const maxSize = 5;
+    const minSize = 0.4;
+    const size = minSize + ( 1 * (maxSize - minSize) / n );
+    const result = Math.trunc(100 * size) / 100;
+    console.log(result);
+    return result;
+  }
+  const size = calcFontSize(text?.length);
 
   const DialogButton = (
-      <div className="title-container" style={{ fontSize: `${size}vw`, lineHeight: 1.25}}>
-    <Button onClick={() => setOpen(true)}>
+      <div className="title-container" onClick={() => setOpen(true)} style={{ fontSize: `${size}em`, lineHeight: 1.25}}>
+    {/* <Button onClick={() => setOpen(true)}> */}
         <span className="title-on-button">{text}</span>
         {children}
-    </Button>
+    {/* </Button> */}
       </div>
   );
 
   const Choices = (
     <>
-      <Button key={1} onClick={() => handleClick(true)}>
-        YES
-      </Button>
-      <Button key={0} onClick={() => handleClick(false)}>
+      <Button variant="outlined" color="secondary" key={0} onClick={() => handleClick(false)}>
         NO
+      </Button>
+      <Button variant="contained" color="secondary" key={1} onClick={() => handleClick(true)}>
+        YES
       </Button>
     </>
   );

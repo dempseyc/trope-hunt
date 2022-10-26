@@ -50,12 +50,12 @@ const ViewMain = () => {
   };
 
   const actions = {
-    chooseMovie: (idx) => {
+    chooseMovie: (data) => {
       if (userReady) {
-        chooseMovie(data[idx]);
+        chooseMovie(data);
         setGameOn(true);
       } else {
-        setCurrView(2);
+        setCurrView(1);
       }
     },
     setGameOn: (boo) => {

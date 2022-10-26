@@ -17,7 +17,6 @@ const CheckIcon = ({value}) => {
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
   "&:not(:last-child)": {
     borderBottom: 0,
   },
@@ -88,7 +87,7 @@ const TropeListItem = (props) => {
 
   const bonusButtons = bonus.map((b, i) => {
     return (
-      <Button key={`bb-${i}`} onClick={() => handleBonus(b, i)}>
+      <Button color="secondary" key={`bb-${i}`} onClick={() => handleBonus(b, i)}>
         <CheckIcon value={bonusCheck[i]} />
         {b}
       </Button>
@@ -98,10 +97,10 @@ const TropeListItem = (props) => {
   const details = (
     <>
       <div className="bonus-buttons">{bonusButtons}</div>
-      <Button variant="outlined" onClick={handleClaim}>
+      <Button color="secondary" variant="outlined" onClick={handleClaim}>
         Claim Trope
       </Button>
-      <Button className="not-now-button" variant="outlined" onClick={()=>{handleClick(null)}}>Not Now</Button>
+      <Button color="secondary" className="not-now-button" variant="outlined" onClick={()=>{handleClick(null)}}>Not Now</Button>
     </>
   );
 

@@ -91,10 +91,11 @@ export const users: UsersModel = {
         actions.loginUser(payload);
       } else if (response.data.message) {
         actions.setMessages(response.data.message);
-        throw new Error();
+        throw new Error(response.data.message);
       }
     } catch (error) {
       actions.setError(true);
+      console.log(error);
     } finally {
       actions.setLoading(false);
     }
@@ -103,7 +104,7 @@ export const users: UsersModel = {
   loginUser: thunk(async (actions, payload) => {
     console.log(payload);
     actions.setCredentials(payload);
-    const basicAuth = "Basic " + Buffer.from(payload.email + ":" + payload.password, 'base64');
+    const basicAuth = "Basic " + Buffer.from(payload.email + ":" + payload.password).toString('base64');
     let url = `${API_URL}api/auth/login`;
     try {
       const response = await axios.post(
@@ -121,7 +122,7 @@ export const users: UsersModel = {
       actions.fetchUser(null);
     } catch (error) {
       console.log(error);
-      actions.setMessages(error.response.data.message);
+      actions.setMessages(error.message);
       actions.setError(true);
     } finally {
       actions.setLoading(false);
