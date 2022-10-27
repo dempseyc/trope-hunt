@@ -37,6 +37,8 @@ const ActionableItemList = (props) => {
         <div id='item-list' className='item-list'>
             {list}
             <Loading contentName={contentName} isLoading={loading} />
+            {/* extra div helps layout on large screen */}
+            <div className="movie-list-item"></div>
         </div>
     );
 

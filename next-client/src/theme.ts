@@ -59,7 +59,7 @@ const theme = createTheme({
         outlinedSecondary: {
           color: teal[900],
           backgroundColor: "white",
-          border: "2px solid",
+          border: "1px solid",
           borderColor: teal[900],
         },
         containedPrimary: {

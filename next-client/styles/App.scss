@@ -100,17 +100,17 @@ $default-margin: 0.5em;
 }
 
 .view-content {
-  height:  100%;
+  height:  95%;
 }
 
 .item-list {
   max-height: 75%;
-  max-width: 90%;
+  width: 90%;
+  max-width: 1000px;
   margin: 0 auto;
-  // max-height: 912px; //mui button minheight 48px * 19;
   min-height: 48px;
   overflow-y: scroll;
-  margin-top: $default-margin;
+  // margin-top: $default-margin;
 }
 
 .NB-Layout {
@@ -164,6 +164,14 @@ $default-margin: 0.5em;
 ////
 /// 
 /// end Layout
+/// 
+/// 
+/// 
+.info-text {
+  line-height: 1.5;
+  text-align: left;
+  margin-left: 1em;
+}
 
 .clickable-text {
   padding: 0.5rem;

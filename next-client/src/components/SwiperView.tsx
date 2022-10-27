@@ -4,12 +4,9 @@ import ViewUser from "./ViewUser";
 import ViewGeneric from "./ViewGeneric";
 import ViewMore from "./ViewMore";
 import ViewGame from "./ViewGame";
+import ViewInfo from "./ViewInfo";
 import GameHeader from "./GameHeader";
-import Paper from "@mui/material/Paper";
-import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
-
-
 
 const SwiperView = (props) => {
   const { viewName, index } = props;
@@ -33,8 +30,11 @@ const SwiperView = (props) => {
     case "user":
       view = <ViewUser {...props} />;
       break;
-    case "more":
-      view = <ViewMore {...props} />;
+      case "more":
+        view = <ViewMore {...props} />;
+        break;
+        case "info":
+      view = <ViewInfo {...props} />;
       break;
     default:
       view = <ViewGeneric {...props} />;

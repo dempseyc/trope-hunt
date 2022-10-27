@@ -28,12 +28,12 @@ const SwipeViews = (props) => {
             console.log("swiperight");
             if (index > 0) { setIndex(index-1); }
         },
-        onTouchStartOrOnMouseDown: (eventData) => {
-            console.log("begin dragging");
-        },
-        onTouchEndOrOnMouseUp: (eventData) => {
-            console.log("end dragging");
-        },
+        // onTouchStartOrOnMouseDown: (eventData) => {
+        //     console.log("begin dragging");
+        // },
+        // onTouchEndOrOnMouseUp: (eventData) => {
+        //     console.log("end dragging");
+        // },
         trackMouse: true,
         delta: 20,                             // min distance(px) before a swipe starts. *See Notes*
         preventScrollOnSwipe: true,           // prevents scroll during swipe (*See Details*)
