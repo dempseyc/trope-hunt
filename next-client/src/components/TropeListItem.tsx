@@ -109,6 +109,7 @@ const TropeListItem = (props) => {
       <Accordion expanded={selection === idx} onChange={handleChange}>
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
           {description}
+          {/* {Array.from({length: data.points / 10}, ()=>"•")} */}
         </AccordionSummary>
         <AccordionDetails>{details}</AccordionDetails>
       </Accordion>

@@ -45,8 +45,8 @@ const ViewMain = () => {
 
   const filterFunction = (data, filter) => {
     const filterWords = filter.toLowerCase().split(" ");
-    const testString = data.original_title.toLowerCase();
-    return filterWords.every((word) => testString.includes(word));
+    const testString = data.original_title?.toLowerCase();
+    return filterWords.every((word) => testString?.includes(word));
   };
 
   const actions = {

@@ -11,7 +11,7 @@ const Home = () => {
   const {HOME_VIEWS} = config;
   const currView = useStoreState((state) => state.currView);
   const setCurrView = useStoreActions((actions) => actions.setCurrView);
-	const currViewName = useMemo(() => HOME_VIEWS[currView], [currView]);
+	const currViewName = useMemo(() => HOME_VIEWS[currView], [currView, HOME_VIEWS]);
 
   useEffect(() => {
     Router.push(currViewName);

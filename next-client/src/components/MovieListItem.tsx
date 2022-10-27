@@ -64,6 +64,7 @@ const MovieListItem = (props) => {
             width="100"
             height="150"
             src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
+            alt={`${text} movie poster`}
           />
         </div>
         <div className="movie-description">{overview}</div>
