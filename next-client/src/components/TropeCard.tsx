@@ -36,10 +36,11 @@ const TropeCard = (props) => {
   }, [gameOn, movie, tropes, score, saveGame]);
 
   const filteredTropes = tropes?.filter((trope) => trope.status === "card");
+  const sortedTropes = filteredTropes?.sort((tropeA,tropeB) => tropeB.dateAdded - tropeA.dateAdded);
 
   return (
     <ActionableItemList
-      data={filteredTropes}
+      data={sortedTropes}
       loading={loading}
       ListItem={TropeListItem}
       actions={actions}

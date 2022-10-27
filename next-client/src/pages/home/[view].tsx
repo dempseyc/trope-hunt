@@ -4,16 +4,11 @@ import SwipeViews from "components/SwipeViews";
 import SwiperView from "components/SwiperView";
 import SP_TAB_Layout from "components/SP_TAB_Layout";
 import Router from "next/router";
-
-const HOME_VIEWS = [
-  "main",
-  // "chat",
-  "user",
-  "more"
-];
+import { config } from '../../constants'
 
 const Home = () => {
   console.log("home render");
+  const {HOME_VIEWS} = config;
   const currView = useStoreState((state) => state.currView);
   const setCurrView = useStoreActions((actions) => actions.setCurrView);
 	const currViewName = useMemo(() => HOME_VIEWS[currView], [currView]);

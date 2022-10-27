@@ -1,6 +1,6 @@
 import httpProxy from 'http-proxy';
 
-const API_URL = process.env.API_URL_PROD;
+const API_URL = process.env.API_URL_DEV;
 const proxy = httpProxy.createProxyServer();
 // Make sure that we don't parse JSON bodies on this route:
 
