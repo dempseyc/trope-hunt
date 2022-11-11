@@ -9,6 +9,7 @@ import MuiAccordionDetails from "@mui/material/AccordionDetails";
 import Button from "@mui/material/Button";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import TreePoint from './TreePoint';
 
 const CheckIcon = ({value}) => {
   return value ? <CheckBoxIcon/> : <CheckBoxOutlineBlankIcon/>;
@@ -86,11 +87,17 @@ const TropeListItem = (props) => {
   };
 
   const bonusButtons = bonus.map((b, i) => {
+    const bonusPointDisplay = data.bonus_pts ?
+      Array.from({length: data.bonus_pts / 10}, ()=> <TreePoint position="icon"/>) :
+      null;
+    const plusSign = bonusPointDisplay ? " + " : null;
     return (
+      <>
       <Button color="secondary" key={`bb-${i}`} onClick={() => handleBonus(b, i)}>
-        <CheckIcon value={bonusCheck[i]} />
+        <CheckIcon value={bonusCheck[i]} />{plusSign} {bonusPointDisplay}
         {b}
       </Button>
+      </>
     );
   });
 
@@ -105,11 +112,11 @@ const TropeListItem = (props) => {
   );
 
   return (
-    <div className="movie-list-item">
+    <div className="trope-list-item">
       <Accordion expanded={selection === idx} onChange={handleChange}>
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-          {description}
-          {/* {Array.from({length: data.points / 10}, ()=>"•")} */}
+          {description}{" "}
+          {Array.from({length: data.points / 10}, ()=><TreePoint position="inline"/>)}
         </AccordionSummary>
         <AccordionDetails>{details}</AccordionDetails>
       </Accordion>

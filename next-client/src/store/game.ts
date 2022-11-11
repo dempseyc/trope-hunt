@@ -95,7 +95,8 @@ export const game: GameModel = {
     let count = 11;
     while (count < state.tropeQty) {
       const i = Math.floor(Math.random()*state.tropes.length);
-      if (state.tropes[i]?.status !== "card") {
+      const status = state.tropes[i]?.status;
+      if (status === "pool") {
         state.tropes[i].status = "card";
         state.tropes[i].dateAdded = new Date().getTime();
         count +=1;
