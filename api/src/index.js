@@ -197,7 +197,16 @@ function pwCheck(req, res, next) {
 function pwValidate(req, res, next) {
   try {
     const pwString = req.body.user.password;
-    const valid = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(pwString);
+    const isValid = (str) => {
+      if (str.length < 6) { return false; };
+      str.split("").forEach(char => {
+        if (/[a-zA-Z_0-9@\!#\$\^%&*()+=\-[]\\\';,\.\/\{\}\|\":<>\? ]./.test(char)) {
+          return true
+        }
+      });
+      return false;
+    }
+    const valid = isValid();
     if (valid) {
       next();
     } else {
