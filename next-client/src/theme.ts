@@ -88,9 +88,9 @@ const theme = createTheme({
         },
         indicator: {
           backgroundColor: amber[400],
-          height: "4px",
+          height: "2px",
           borderRadius: "2px 2px 0 0",
-          boxShadow: `0 0px 8px ${amber[900]}`,
+          boxShadow: `0 0px 4px ${amber[900]}`,
         },
       },
     },
@@ -102,6 +102,9 @@ const theme = createTheme({
             color: "#000000ff",
           },
           minWidth: "75px",
+          "&>.MuiTab-iconWrapper": {
+            marginBottom: "0px",
+          }
         },
       },
     },
@@ -117,6 +120,8 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           fontSize: "inherit",
+          width: "1.5em",
+          height: "1.5em",
         },
       },
     },
