@@ -199,14 +199,12 @@ function pwValidate(req, res, next) {
     const pwString = req.body.user.password;
     const isValid = (str) => {
       if (str.length < 6) { return false; };
-      str.split("").forEach(char => {
-        if (/[a-zA-Z_0-9@\!#\$\^%&*()+=\-[]\\\';,\.\/\{\}\|\":<>\? ]./.test(char)) {
-          return true
-        }
+      const ok = str.split("").every(char => {
+        return /[a-zA-Z_0-9@\!#\$\^%&*+=\-\.\|:\?]/.test(char);
       });
-      return false;
+      return ok;
     }
-    const valid = isValid();
+    const valid = isValid(pwString);
     if (valid) {
       next();
     } else {

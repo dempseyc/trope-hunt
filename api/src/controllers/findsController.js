@@ -41,6 +41,7 @@ exports.create = async function (req, res) {
         $push: {
           found_by: found_by,
           found_on: found_on,
+          indications: params.indication,
         },
       },
       {

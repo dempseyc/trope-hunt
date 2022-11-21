@@ -6,7 +6,8 @@ const FindSchema = new Schema({
     found_by: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     movie_id: { type: Schema.Types.ObjectId, ref: 'Movie', required: true },
     trope_id: { type: Schema.Types.ObjectId, ref: 'Trope', required: true },
-    bonus_memos: [{ type: String }]
+    bonus_memos: [{ type: String }],
+    indications: [{ type: Number}]
 });
 
 module.exports = mongoose.model('Find', FindSchema);
