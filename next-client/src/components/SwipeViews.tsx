@@ -8,11 +8,13 @@ const SwipeViews = (props) => {
 
     const swipeViewsStyle = {
         height: '100%',
-        width: '100vw',
+        width: '300%',
         overflow: 'hidden',
     }
     // put transitions in and add eventlister for transition end somewhere in here
     const viewsWrapperStyle = {
+        width: '100%',
+        height: '100%',
         display: 'inline-flex',
         flexDirection: 'row' as const,
         transition: 'transform 200ms',
