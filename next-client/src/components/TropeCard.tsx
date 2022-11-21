@@ -19,6 +19,9 @@ const TropeCard = (props) => {
     claimTrope: (id, bonus, points) => {
       updateGame({ movie, id, bonus, points });
     },
+    discardTrope: (id) => {
+      updateGame({ movie, id});
+    }
   };
 
   useEffect(() => {

@@ -1,21 +1,16 @@
-const iconBaselineStyle = {
+const iconNormalStyle = {
   display: "inline",
-  top: "0.125em",
   marginLeft: "0.125em",
   marginRight: "0.125em",
 };
 
-const TreePoint = ({position}) => {
-  const style = position && position !== "inline" ? iconBaselineStyle 
-    : { 
-      ...iconBaselineStyle,
-      position: "relative" as "relative"
-    }
+const TreePoint = () => {
+
   return (
     <>
     
     <svg
-      style={style}
+      style={iconNormalStyle}
       width="1em"
       height="1em"
       viewBox="0 0 16 16"

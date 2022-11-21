@@ -8,8 +8,8 @@ const API_URL = "/api";
 interface UpdateShape {
   id: string;
   movie: MovieData | undefined;
-  bonus: string[] | [];
-  points: number;
+  bonus?: string[] | [];
+  points?: number;
 }
 
 interface GameDataShape {
@@ -25,7 +25,7 @@ interface TropeData {
   bonus:  string[] | [];
   ubiquity: number;
   bonus_pts:	number;
-  status: "pool" | "card" | "found" ;
+  status: "pool" | "card" | "found" | "not-found";
   dateAdded: number;
 }
 
@@ -157,9 +157,14 @@ export const game: GameModel = {
       'Authorization': `Bearer ${token}`
     };
     const {movie, id, bonus, points} = payload;
+    const discard = (points === undefined);
     const movie_id = movie._id;
-    actions.setStatus({id, status: "found"});
-    actions.addPoints(points);
+    if (!discard) {
+      actions.setStatus({id, status: "found"});
+      actions.addPoints(points);
+    } else {
+      actions.setStatus({id, status: "not-found"});
+    }
     actions.newTrope();
     const url = `${API_URL}/finds/create`;
     try {
@@ -167,7 +172,8 @@ export const game: GameModel = {
       await axios.post(url,{
         movie_id,
         trope_id: id,
-        bonus_memos: bonus
+        bonus_memos: bonus,
+        indication: discard ? -1 : 1
       },{
         headers: headers
       });

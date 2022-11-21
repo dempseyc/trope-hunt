@@ -54,13 +54,16 @@ const theme = createTheme({
           backgroundColor: "white",
         },
         outlinedPrimary: {
-          border: "1px solid white",
-        },
-        outlinedSecondary: {
           color: teal[900],
           backgroundColor: "white",
           border: "1px solid",
           borderColor: teal[900],
+        },
+        outlinedSecondary: {
+          color: red[900],
+          backgroundColor: "white",
+          border: "1px solid",
+          borderColor: red[900],
         },
         containedPrimary: {
           backgroundColor: teal[900],

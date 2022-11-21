@@ -76,8 +76,13 @@ const TropeListItem = (props) => {
     const boni = bonus.filter((b, i) => bonusCheck[i]);
     const points = data.points + (boni.length * data.bonus_pts);
     actions.claimTrope(data._id, boni, points);
-    handleClick(null);
+    handleClick(null); // unselects accordion expanded element
   };
+
+  const handleDiscard = () => {
+    actions.discardTrope(data._id);
+    handleClick(null); // unselects accordion expanded element
+  }
 
   const handleBonus = (_, i) => {
     let newBonusCheck = [...bonusCheck];
@@ -88,7 +93,7 @@ const TropeListItem = (props) => {
 
   const bonusButtons = bonus.map((b, i) => {
     const bonusPointDisplay = data.bonus_pts ?
-      Array.from({length: data.bonus_pts / 10}, ()=> <TreePoint position="icon"/>) :
+      Array.from({length: data.bonus_pts / 10}, ()=> <TreePoint/>) :
       null;
     const plusSign = bonusPointDisplay ? " + " : null;
     return (
@@ -104,10 +109,11 @@ const TropeListItem = (props) => {
   const details = (
     <>
       <div className="bonus-buttons">{bonusButtons}</div>
-      <Button color="secondary" variant="outlined" onClick={handleClaim}>
+      <Button color="primary" variant="contained" onClick={handleClaim}>
         Claim Trope
       </Button>
-      <Button color="secondary" className="not-now-button" variant="outlined" onClick={()=>{handleClick(null)}}>Not Now</Button>
+      <Button color="primary" className="not-now-button" variant="outlined" onClick={()=>{handleClick(null)}}>Not Now</Button>
+      <Button color="secondary" className="not-now-button" variant="contained" onClick={()=>{handleDiscard()}}>Discard</Button>
     </>
   );
 
@@ -116,7 +122,7 @@ const TropeListItem = (props) => {
       <Accordion expanded={selection === idx} onChange={handleChange}>
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
           {description}{" "}
-          {Array.from({length: data.points / 10}, ()=><TreePoint position="inline"/>)}
+          {Array.from({length: data.points / 10}, ()=><TreePoint/>)}
         </AccordionSummary>
         <AccordionDetails>{details}</AccordionDetails>
       </Accordion>

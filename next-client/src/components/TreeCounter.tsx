@@ -3,6 +3,12 @@ const iconBaselineStyle = {
   position: "relative" as "relative",
 }
 
+const treesTextStyle = {
+  fontSize: "0.7em",
+  color: "#ffecac",
+  marginRight: "0.2em",
+}
+
 const Tree = (props) => {
   const { num } = props;
   const circles = Array.from({ length: 10 });
@@ -112,7 +118,7 @@ const TreeCounter = (props) => {
   return (
     <div className="icon baseline" style={{display: "inline-flex"}} aria-label={`Score ${number}`}>
       <span className="trees-wrapper" >
-        <Tree num={num} /><span className="trees"> + {`${num2}`}</span>
+        <Tree num={num} /><span className="trees-text" style={treesTextStyle}> + {`${num2}`}</span>
         <Tree num={10} />
       </span>
     </div>
