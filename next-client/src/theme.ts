@@ -40,12 +40,6 @@ const theme = createTheme({
           fontSize: "inherit",
           lineHeight: "inherit",
           margin: "0.2em",
-          ":focus": {
-            //same as :hover
-            webkitTextDecoration: "none",
-            textDecoration: "none",
-            backgroundColor: teal[500],
-          },
           color: "white",
           border: "none",
         },
@@ -58,12 +52,44 @@ const theme = createTheme({
           backgroundColor: "white",
           border: "1px solid",
           borderColor: teal[900],
+          ":focus": {
+            webkitTextDecoration: "none",
+            textDecoration: "none",
+            backgroundColor: teal[200],
+          },
+          ":hover": {
+            webkitTextDecoration: "none",
+            textDecoration: "none",
+            backgroundColor: teal[200],
+          },
         },
         outlinedSecondary: {
           color: red[900],
           backgroundColor: "white",
           border: "1px solid",
           borderColor: red[900],
+          ":focus": {
+            webkitTextDecoration: "none",
+            textDecoration: "none",
+            backgroundColor: red[200],
+          },
+          ":hover": {
+            webkitTextDecoration: "none",
+            textDecoration: "none",
+            backgroundColor: red[200],
+          },
+        },
+        textPrimary: {
+          ":focus": {
+            webkitTextDecoration: "none",
+            textDecoration: "none",
+            backgroundColor: teal[400],
+          },
+          ":hover": {
+            webkitTextDecoration: "none",
+            textDecoration: "none",
+            backgroundColor: teal[400],
+          },
         },
         containedPrimary: {
           backgroundColor: teal[900],

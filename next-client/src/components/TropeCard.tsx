@@ -3,7 +3,7 @@ import { useStoreState, useStoreActions } from "../store/store";
 import ActionableItemList from "./ActionableItemList";
 import TropeListItem from "./TropeListItem";
 
-const TropeCard = (props) => {
+const TropeCard = () => {
   const tropes = useStoreState((state) => state.game.tropes);
   const loading = useStoreState((state) => state.game.loading);
   const updateGame = useStoreActions((actions) => actions.game.updateGame);
@@ -23,7 +23,6 @@ const TropeCard = (props) => {
       updateGame({ movie, id});
     }
   };
-
   useEffect(() => {
     if (!tropes) {
       console.log("ue in viewgame");

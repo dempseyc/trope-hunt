@@ -41,10 +41,14 @@ const ViewMain = () => {
       loadGame(gameData);
       setGameOn(true);
     }
+    if (!gameOn && !gameData?.gameOn && gameData?.score) {
+      loadGame(gameData);
+    }
   }, [gameOn, gameData, gameLoaded, loadMovie, loadGame, setGameOn]);
 
   const filterFunction = (data, filter) => {
-    const filterWords = filter.toLowerCase().split(" ");
+    const ignoreList = ["a","an","and","t","th","the","&","+",];
+    const filterWords = filter.toLowerCase().split(" ").filter((word) => !ignoreList.includes(word));
     const testString = data.original_title?.toLowerCase();
     return filterWords.every((word) => testString?.includes(word));
   };
