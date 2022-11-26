@@ -12,7 +12,7 @@ const Dashboard = (): JSX.Element => {
             fetchUser(null);
         }
     },[user_id, fetchUser]);
-    const isAdmin = (user_id === "638253e6050e2b23edc46c19");
+    const isAdmin = (user_id === "636d331fe7b21331ffcd7435");
     return (
         <div className="Dashboard">
             <header>{isAdmin ? `DASHBOARD`: `DATA`}</header>
