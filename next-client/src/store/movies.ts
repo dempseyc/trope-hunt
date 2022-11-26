@@ -116,7 +116,7 @@ export const movies: MoviesModel = {
     state.currentGameMovie = payload;
   }),
   chooseGameMovie: thunk(async (actions, payload) => {
-    const url = `${API_URL}/create`;
+    const url = `${API_URL}create`;
     const token = localStorage.token;
     try {
       const response = await axios.post(url, 

@@ -1,3 +1,7 @@
+import Link from 'next/link'
+
+const AdminButton = () => <Link href='/admin'><a>Admin Page</a></Link>
+
 const ViewInfo = () => {
   return (
     <>
@@ -9,6 +13,7 @@ const ViewInfo = () => {
         <p>{`When finished watching movie, or to go back to Movie Search, click the
         gold movie title, then click yes.`}</p>
       </section>
+      <AdminButton/>
     </>
   );
 };

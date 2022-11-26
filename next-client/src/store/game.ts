@@ -2,6 +2,7 @@ import { Action, Thunk } from "easy-peasy";
 import { action, thunk } from "easy-peasy";
 import { MovieData } from "./movies";
 import axios from "axios";
+import { SettingsRemoteSharp } from "@mui/icons-material";
 
 const API_URL = "/api";
 
@@ -19,14 +20,14 @@ interface GameDataShape {
   score: number;
 }
 
-interface TropeData {
+export type TropeData = {
   _id: string;
   description: string;
   bonus:  string[] | [];
-  ubiquity: number;
   bonus_pts:	number;
-  status: "pool" | "card" | "found" | "not-found";
-  dateAdded: number;
+  points: number;
+  status?: "pool" | "card" | "found" | "not-found";
+  dateAdded?: number;
 }
 
 interface StatusShape {
@@ -42,9 +43,11 @@ export interface GameModel {
   setLoading: Action<GameModel, GameModel["loading"]>;
   tropes: [...TropeData[]] | null;
   setTropes: Action<GameModel, GameModel["tropes"]>;
+  refreshTrope: Action<GameModel, TropeData>;
   setStatus: Action<GameModel, StatusShape>;
   newTrope: Action<GameModel>;
   fetchTropes: Thunk<GameModel>;
+  updateTrope: Thunk<GameModel, TropeData>;
   saveGame: Thunk<GameModel, GameDataShape>;
   updateGame: Thunk<GameModel, UpdateShape>;
   addPoints: Action<GameModel, number>;
@@ -116,6 +119,36 @@ export const game: GameModel = {
     } finally {
       actions.setLoading(false);
     }
+  }),
+  updateTrope: thunk(async (actions, payload: TropeData) => {
+    const token = localStorage.token;
+    if (!token) {
+      return;
+    }
+    const headers = {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'Authorization': `Bearer ${token}`
+    };
+    const url = `${API_URL}/tropes/update`;
+    try {
+      actions.setLoading(true);
+      const response = await axios.patch(url,payload,{
+        headers: headers
+      });
+      if (response) {
+        actions.refreshTrope(response.data);
+      }
+    } catch (error) {
+      actions.setError(true);
+    } finally {
+      actions.setLoading(false);
+    }
+  }),
+  refreshTrope: action((state, payload) => {
+    const index = state.tropes.findIndex((trope) => trope._id = payload._id);
+    if (index < 0 ) { state.tropes[state.tropes.length] = payload; }
+    else { state.tropes[index] = payload; }
   }),
   addPoints: action((state, payload) => { state.score += payload }),
   loadGame: action((state, payload) => {

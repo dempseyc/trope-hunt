@@ -363,3 +363,9 @@ $default-margin: 0.5em;
 button {
   font-size: 5vh;
 }
+
+.Dashboard {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
