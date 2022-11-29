@@ -3,10 +3,10 @@ const Trope = require("../models/Trope");
 
 exports.index = async function (req, res) {
   try {
-    const finds = await Trope.find({}).exec();
+    const docs = await Trope.find({}).exec();
     let results = ["no results"];
-    if (finds.length) {
-      results = finds;
+    if (docs.length) {
+      results = docs;
     }
     res.json(results);
   } catch (error) {
@@ -45,11 +45,12 @@ exports.create = async function (req, res) {
 exports.update = async function (req, res) {
   try {
     const params = req.body;
-    const trope = await Trope.findOneAndUpdate({ _id: req.params.id }, params, {
+    const trope = await Trope.findOneAndUpdate({_id: params._id}, params, {
       new: true,
+      upsert: true,
     }).exec();
     if (trope) {
-      res.send(trope);
+      res.json(trope);
     } else {
       throw new Error("error in trope update");
     }

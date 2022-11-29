@@ -6,7 +6,7 @@ const toString = (arr: string[] | []) => arr.join(" | ");
 const toArray = (str: string) => str.split(" | ");
 
 const TropeForm = (props) => {
-  const {trope, labels} = props;
+  const {trope, labels, invalidate, setOpen} = props;
   const updateTrope = useStoreActions((actions) => actions.game.updateTrope);
 
   const { register, handleSubmit } = useForm();
@@ -20,7 +20,11 @@ const TropeForm = (props) => {
     return params;
   }
 
-  const onSubmit = (data) => updateTrope(buildParams(data));
+  const onSubmit = (data) => {
+    updateTrope(buildParams(data));
+    setOpen(false);
+    invalidate();
+  }
 
   const Inputs = Object.keys(trope).filter((label)=>labels.includes(label)).map((label,i) => {
     const value = (typeof trope[label] === 'object') ? toString(trope[label]) : trope[label];

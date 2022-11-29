@@ -16,7 +16,7 @@ interface UpdateShape {
 interface GameDataShape {
   gameOn: boolean;
   movie?: MovieData;
-  tropes: any[];
+  tropes: any[] | [];
   score: number;
 }
 
@@ -216,9 +216,8 @@ export const game: GameModel = {
       actions.setLoading(false);
     }
   }),
-  clearGame: action((state, payload) => { 
+  clearGame: action((state) => { 
     state.tropes = null;
-    state.score = 0;
-    state.gameLoaded = false;
+    state.gameLoaded = true;
   }),
 };

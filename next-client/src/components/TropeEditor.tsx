@@ -26,8 +26,8 @@ const headerRow = () => {
   return headers.map((header,i) => <TableCell key={i} align="left">{header}</TableCell>)
 }
 
-const Row = (props: { row: TropeData })  => {
-  const { row } = props;
+const Row = (props: { row: TropeData, invalidate: ()=>void })  => {
+  const { row, invalidate } = props;
   const [open, setOpen] = React.useState(false);
 
   const rowCells = headers.map((col,i) => {
@@ -60,7 +60,7 @@ const Row = (props: { row: TropeData })  => {
               <Typography variant="h6" gutterBottom component="div">
                 UPDATE
               </Typography>
-              <TropeForm key={`${row._id}-form`} trope={row} labels={headers}/>
+              <TropeForm key={`${row._id}-form`} trope={row} labels={headers} invalidate={invalidate} setOpen={setOpen}/>
             </Box>
           </Collapse>
         </TableCell>
@@ -78,6 +78,10 @@ const TropeViewer = () => {
     }
   }, [tropes, fetchTropes]);
 
+  const invalidate = () => {
+    fetchTropes();
+  }
+
     return (
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
@@ -88,9 +92,9 @@ const TropeViewer = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <Row key="add-trope" row={{_id: null, description: "+ NEW", points: 10, bonus: [], bonus_pts: 0}}/>
+            <Row key="add-trope" invalidate={invalidate} row={{_id: null, description: "+ NEW", points: 10, bonus: [], bonus_pts: 0}}/>
             {tropes && tropes.map((row,i) => (
-              <Row key={i} row={row} />
+              <Row invalidate={invalidate} key={i} row={row} />
             ))}
           </TableBody>
         </Table>

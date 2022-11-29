@@ -4,6 +4,7 @@ const saltRounds = 10;
 const User = require("../models/User");
 
 exports.show = async function (req, res) {
+  console.log(res.locals.user);
   const _id = res.locals.user._id;
   try {
     if (!_id) {

@@ -12,10 +12,12 @@ const GameHeader = () => {
   const tropes = useStoreState((state) => state.game.tropes);
   const setGameOn = useStoreActions((actions) => actions.setGameOn);
   const saveGame = useStoreActions((actions) => actions.game.saveGame);
+  const clearGame = useStoreActions((actions) => actions.game.clearGame);
   const setCurrentGameMovie = useStoreActions((actions) => actions.movies.setCurrentGameMovie);
   const handleMovieEnd = () => {
     setCurrentGameMovie(null);
-    saveGame({gameOn: false, score, tropes});
+    saveGame({gameOn: false, score, tropes: []});
+    clearGame();
     setGameOn(false);
   };
   console.log("header renders", score);

@@ -137,18 +137,22 @@ function exclude(path, middleware) {
 app.use("/api/users", exclude("/create", tokenCheck));
 app.use("/api/users/create", pwValidate);
 
+app.use("/api/users/:id/update", tokenCheck);
 app.use("/api/users", usersRouter);
-app.use("/api/users/:id/update", pwCheck);
 
 app.use("/api/tropes", exclude("/", tokenCheck));
+app.use("/api/tropes", exclude("/", adminCheck));
 app.use("/api/tropes", tropesRouter);
 
 app.use("/api/gameMovies/create", tokenCheck);
 app.use("/api/gameMovies/delete", tokenCheck);
+app.use("/api/gameMovies/delete", adminCheck);
 app.use("/api/gameMovies/update", tokenCheck);
+app.use("/api/gameMovies/update", adminCheck);
 app.use("/api/gameMovies", gameMoviesRouter);
 
 app.use("/api/finds", tokenCheck);
+app.use("/api/finds/delete", adminCheck);
 app.use("/api/finds", findsRouter);
 
 function tokenCheck(req, res, next) {
@@ -159,17 +163,33 @@ function tokenCheck(req, res, next) {
       if (payload) {
         User.findById(payload.user_id).then((doc) => {
           console.log("token ok");
-          res.locals.user = doc;
-          next();
+          if (doc) {
+            res.locals.user = doc;
+            next();
+          } else {
+            console.log("user not found", req.headers);
+            res.status(401).json({ message: "Unauthorized" });
+          }
         });
-      } else {
-        console.log("user not found", req.headers);
-        res.status(401).json({ message: "Unauthorized" });
       }
     });
   } catch (error) {
     console.log("catch in tokenCheck", req.headers);
     res.status(401).json({ message: "Unauthorized" });
+  }
+}
+
+function adminCheck(req, res, next) {
+  console.log("inside adminCheck");
+  try {
+    allow = res.locals.user._id.toString() === process.env.ADMIN_ID_DEV;
+    if (allow) {
+      next();
+    } else {
+      throw new Error("not allowed");
+    }
+  } catch (error) {
+    res.status(401).json({ message: `${error.message}` });
   }
 }
 
@@ -198,12 +218,14 @@ function pwValidate(req, res, next) {
   try {
     const pwString = req.body.user.password;
     const isValid = (str) => {
-      if (str.length < 6) { return false; };
-      const ok = str.split("").every(char => {
+      if (str.length < 6) {
+        return false;
+      }
+      const ok = str.split("").every((char) => {
         return /[a-zA-Z_0-9@\!#\$\^%&*+=\-\.\|:\?]/.test(char);
       });
       return ok;
-    }
+    };
     const valid = isValid(pwString);
     if (valid) {
       next();
@@ -212,11 +234,9 @@ function pwValidate(req, res, next) {
     }
   } catch (error) {
     console.log("catch in pwValidate");
-    res
-      .status(201)
-      .json({
-        message: "Minimum 6 characters, at least one letter and one number",
-      });
+    res.status(201).json({
+      message: "Minimum 6 characters, at least one letter and one number",
+    });
   }
 }
 
