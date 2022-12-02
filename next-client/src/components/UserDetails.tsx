@@ -6,7 +6,7 @@ const UserDetails = (props) => {
     const {logoutUser} = props;
    return (
       <div className="UserDetails">
-         <UserAvatar name={details.username} image={details.image} />
+         {/* <UserAvatar name={details.username} image={details.image} /> */}
          <span>
          {details.email}
          </span>

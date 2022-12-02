@@ -69,6 +69,7 @@ export const users: UsersModel = {
         },
       });
       actions.setUser(response.data);
+      actions.setCredentials({email: response.data.email});
       actions.setReady(true);
     } catch (error) {
       actions.setError(true);
@@ -119,6 +120,7 @@ export const users: UsersModel = {
         }
       );
       actions.storeToken(response.data);
+      actions.setCredentials({email: payload.email, password:""});
       actions.fetchUser(null);
     } catch (error) {
       console.log(error);
