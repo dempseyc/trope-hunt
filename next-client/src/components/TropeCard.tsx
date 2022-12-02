@@ -24,7 +24,7 @@ const TropeCard = () => {
     }
   };
   useEffect(() => {
-    if (!tropes) {
+    if (!tropes || !tropes.length) {
       console.log("ue in viewgame");
       const fetch = async () => {
         await fetchTropes();

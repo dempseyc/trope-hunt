@@ -1,4 +1,4 @@
-import * as React from "react";
+import { Fragment, useState, SyntheticEvent } from "react";
 import { styled } from "@mui/material/styles";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
@@ -55,7 +55,7 @@ const TropeListItem = (props) => {
   const { idx, data, selection, handleClick, actions } = props;
   const { description, bonus } = data;
   const bonusRequired = data.bonus_pts === 0;
-  const [bonusCheck, setBonusCheck] = React.useState(
+  const [bonusCheck, setBonusCheck] = useState(
     Array.from(
       {
         length: data.bonus.length,
@@ -68,7 +68,7 @@ const TropeListItem = (props) => {
     )
   );
   
-  const handleChange = (event: React.SyntheticEvent) => {
+  const handleChange = (event: SyntheticEvent) => {
     handleClick(idx);
   };
   
@@ -93,16 +93,16 @@ const TropeListItem = (props) => {
 
   const bonusButtons = bonus.map((b, i) => {
     const bonusPointDisplay = data.bonus_pts ?
-      Array.from({length: data.bonus_pts / 10}, ()=> <TreePoint/>) :
+      Array.from({length: data.bonus_pts / 10}, (_,i)=> <TreePoint key={i}/>) :
       null;
     const plusSign = bonusPointDisplay ? " + " : null;
     return (
-      <>
+      <Fragment key={i}>
       <Button color="secondary" key={`bb-${i}`} onClick={() => handleBonus(b, i)}>
         <CheckIcon value={bonusCheck[i]} />{plusSign} {bonusPointDisplay}
         {b}
       </Button>
-      </>
+      </Fragment>
     );
   });
 
@@ -122,7 +122,7 @@ const TropeListItem = (props) => {
       <Accordion expanded={selection === idx} onChange={handleChange}>
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
           {description}{" "}
-          {Array.from({length: data.points / 10}, ()=><TreePoint/>)}
+          {Array.from({length: data.points / 10}, (_,i)=><TreePoint key={i}/>)}
         </AccordionSummary>
         <AccordionDetails>{details}</AccordionDetails>
       </Accordion>
