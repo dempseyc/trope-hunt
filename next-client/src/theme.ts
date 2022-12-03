@@ -1,5 +1,25 @@
 import { createTheme } from "@mui/material/styles";
-import { teal, red, amber } from "@mui/material/colors";
+import { teal, amber } from "@mui/material/colors";
+
+const purple = {
+  50: '#f3e8f6',
+  100: '#e1c5e9',
+  200: '#ce9fda',
+  300: '#ba79cb',
+  400: '#ab5cc0',
+  500: '#9c3fb5',
+  600: '#9439ae',
+  700: '#8a31a5',
+  800: '#80299d',
+  900: '#6e1b8d',
+  A100: '#eec6ff',
+  A200: '#df93ff',
+  A400: '#d160ff',
+  A700: '#c947ff',
+  'contrastDefaultColor': 'light',
+};
+
+
 
 const theme = createTheme({
   palette: {
@@ -8,7 +28,7 @@ const theme = createTheme({
       light: teal[400],
     },
     secondary: {
-      main: red[900],
+      main: purple[900],
     },
   },
   typography: {
@@ -64,19 +84,19 @@ const theme = createTheme({
           },
         },
         outlinedSecondary: {
-          color: red[900],
+          color: purple[900],
           backgroundColor: "white",
           border: "1px solid",
-          borderColor: red[900],
+          borderColor: purple[900],
           ":focus": {
             webkitTextDecoration: "none",
             textDecoration: "none",
-            backgroundColor: red[200],
+            backgroundColor: purple[200],
           },
           ":hover": {
             webkitTextDecoration: "none",
             textDecoration: "none",
-            backgroundColor: red[200],
+            backgroundColor: purple[200],
           },
         },
         textPrimary: {

@@ -10,7 +10,7 @@ html, body {
 
 body {
   color: $white-text;
-  background: #601616;
+  background: #4c1360;
   // font-family: 'M PLUS Rounded 1c', sans-serif;
   font-family: 'Roboto Serif', serif;
   font-size: 5vw;
@@ -229,8 +229,13 @@ $default-margin: 0.5em;
 ////////  from SwiperPage.scss
 ////////
 
+.login-choices {
+  margin-top: 1em;
+}
+
 .carou-user-form-and-tabs {
   // overflow: hidden;
+  margin-top: 1em;
   width: 100vw;
 
   .form-tabs {
@@ -255,40 +260,40 @@ $default-margin: 0.5em;
   }
 }
 
-.panels-wrapper {
+// .panels-wrapper {
   
-  label {
-    // width: 100%;
-    flex: 0 0 100%;
-    // padding-left: 10%;
-    // padding-right: 10%;
+//   label {
+//     // width: 100%;
+//     flex: 0 0 100%;
+//     // padding-left: 10%;
+//     // padding-right: 10%;
 
 
-        input[type=text] {
-          width: 80%;
-          margin: 0 10%;
-          min-height: 1.3em;
-          padding: 0.1em;
-          font-family: 'M PLUS Rounded 1c', sans-serif;
-          font-size: 1em;
-          display: inline-block;
-          color: #ddddcc;
-          border: 5px solid #ddddcc;
-          margin-bottom: 0.4em;
-          background: #666655;
-        }
+//         input[type=text] {
+//           width: 80%;
+//           margin: 0 10%;
+//           min-height: 1.3em;
+//           padding: 0.1em;
+//           font-family: 'M PLUS Rounded 1c', sans-serif;
+//           font-size: 1em;
+//           display: inline-block;
+//           color: #ddddcc;
+//           border: 5px solid #ddddcc;
+//           margin-bottom: 0.4em;
+//           background: #666655;
+//         }
 
-    }
-    input[type=submit] {
-        height: 2rem;
-        font-size: 1.5rem;
-        color: white;
-        background-color: $black-text;
-        border-radius: 4px;
-        border: 1px solid white; 
-    }
+//     }
+//     input[type=submit] {
+//         height: 2rem;
+//         font-size: 1.5rem;
+//         color: white;
+//         background-color: $black-text;
+//         border-radius: 4px;
+//         border: 1px solid white; 
+//     }
 
-}
+// }
 
 .list {
   overflow-y: scroll;
