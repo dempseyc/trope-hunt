@@ -16,7 +16,7 @@ exports.index = async function (req, res) {
 
 exports.show = async function (req, res) {
   try {
-    const trope = await Trope.findById(req.params.id).exec();
+    const trope = await Trope.findById(req.params._id).exec();
     if (trope) {
       return res.json(trope);
     } else {
@@ -45,6 +45,9 @@ exports.create = async function (req, res) {
 exports.update = async function (req, res) {
   try {
     const params = req.body;
+    if (!params._id) {
+      params._id = new mongoose.mongo.ObjectID();
+    }
     const trope = await Trope.findOneAndUpdate({_id: params._id}, params, {
       new: true,
       upsert: true,

@@ -95,16 +95,16 @@ export const game: GameModel = {
     state.tropes[idx].status = status;
   }),
   newTrope: action((state) => {
-    let count = 11;
-    while (count < state.tropeQty) {
-      const i = Math.floor(Math.random()*state.tropes.length);
-      const status = state.tropes[i]?.status;
-      if (status === "pool") {
-        state.tropes[i].status = "card";
-        state.tropes[i].dateAdded = new Date().getTime();
-        count +=1;
+      const options = state.tropes.filter((t) => t.status === "pool");
+      if (options.length) {
+        const i = Math.floor(Math.random()*options.length);
+        const id = options[i]._id;
+        const index = state.tropes.findIndex((t,i) => (t._id === id));
+        state.tropes[index].status = "card";
+        state.tropes[index].dateAdded = new Date().getTime();
+      } else {
+        console.log("no more");
       }
-    }
   }),
   fetchTropes: thunk(async (actions) => {
     const url = `${API_URL}/tropes/`;

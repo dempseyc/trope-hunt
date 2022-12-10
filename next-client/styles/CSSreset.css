@@ -67,7 +67,7 @@ html {
 
 /* fix another safari ios issue */
 input[type="text"], select:focus {
-    font-size: 16px;
+    font-size: 20px;  /* was 16px */
 }
 
 /*END RESET*/
