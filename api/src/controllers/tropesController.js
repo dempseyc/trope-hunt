@@ -1,4 +1,5 @@
 const { Error } = require("mongoose");
+var mongoose = require('mongoose');
 const Trope = require("../models/Trope");
 
 exports.index = async function (req, res) {
@@ -46,9 +47,9 @@ exports.update = async function (req, res) {
   try {
     const params = req.body;
     if (!params._id) {
-      params._id = new mongoose.mongo.ObjectID();
+      params._id = new mongoose.mongo.ObjectId();
     }
-    const trope = await Trope.findOneAndUpdate({_id: params._id}, params, {
+    const trope = await Trope.findOneAndUpdate({ _id: params._id }, params, {
       new: true,
       upsert: true,
     }).exec();
@@ -64,9 +65,9 @@ exports.update = async function (req, res) {
 
 exports.delete = async function (req, res) {
   try {
-		await Trope.findOneAndDelete({ _id: req.params.id }).exec();
-		res.json({ message: `One Trope deleted ${req.params.id}` });
-	} catch (error) {
-		res.status(400).json({ message: `${error.message}` });
-	}
+    await Trope.findOneAndDelete({ _id: req.params.id }).exec();
+    res.json({ message: `One Trope deleted ${req.params.id}` });
+  } catch (error) {
+    res.status(400).json({ message: `${error.message}` });
+  }
 };
