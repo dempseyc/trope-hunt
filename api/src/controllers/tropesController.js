@@ -1,5 +1,5 @@
 const { Error } = require("mongoose");
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 const Trope = require("../models/Trope");
 
 exports.index = async function (req, res) {
